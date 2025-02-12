@@ -77,7 +77,25 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
                 modified: "2025-02-12T07:58:26Z",
                 generator: "https://www.flickr.com",
                 items: FlickrItem.mocks
-            )
+            ),
+            FlickrFeed(
+                id: "mock_feed_1",
+                title: "Recent Uploads tagged cat",
+                link: "https://www.flickr.com/photos/tags/cat/",
+                description: "Recent cat photos from Flickr",
+                modified: "2025-02-12T08:58:26Z",
+                generator: "https://www.flickr.com",
+                items: FlickrItem.mocks
+            ),
+            FlickrFeed(
+                id: "mock_feed_1",
+                title: "Recent Uploads tagged cat",
+                link: "https://www.flickr.com/photos/tags/cat/",
+                description: "Recent cat photos from Flickr",
+                modified: "2025-02-12T08:58:26Z",
+                generator: "https://www.flickr.com",
+                items: FlickrItem.mocks
+            ),
         ]
     }
 }
