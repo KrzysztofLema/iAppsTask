@@ -7,12 +7,26 @@
 
 import SwiftUI
 
-struct View_Dividers: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+
+public enum DividerSide {
+  case top, bottom, all
 }
 
-#Preview {
-    View_Dividers()
+extension View {
+  public func withDividersAround(
+    sides: DividerSide = .all,
+    dividerColor: Color = .black
+  ) -> some View {
+    VStack(spacing: .zero) {
+      if sides == .top || sides == .all {
+        Divider()
+          .overlay(dividerColor)
+      }
+      self
+      if sides == .bottom || sides == .all {
+        Divider()
+          .overlay(dividerColor)
+      }
+    }
+  }
 }

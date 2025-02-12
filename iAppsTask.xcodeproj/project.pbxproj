@@ -29,9 +29,23 @@
 		9532C7F32D5D3C5400BF8BE3 /* iAppsTaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAppsTaskUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		950239092D5D65F2006A97F6 /* Exceptions for "iAppsTask" folder in "iAppsTask" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Components/ImageLoaderView.swift,
+				"Components/View+Extensions.swift",
+			);
+			target = 9532C7D82D5D3C5100BF8BE3 /* iAppsTask */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9532C7DB2D5D3C5100BF8BE3 /* iAppsTask */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				950239092D5D65F2006A97F6 /* Exceptions for "iAppsTask" folder in "iAppsTask" target */,
+			);
 			path = iAppsTask;
 			sourceTree = "<group>";
 		};

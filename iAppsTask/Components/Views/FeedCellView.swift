@@ -8,11 +8,26 @@
 import SwiftUI
 
 struct FeedCellView: View {
+    var title: String = "Living the life"
+    var imageName: String = Constants.randomImage
+    var font: Font = .title2
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            ImageLoaderView()
+                .aspectRatio(1, contentMode: .fit)
+            Text(title)
+                .font(font)
+                .fontWeight(.semibold)
+                .lineLimit(1)
+                .minimumScaleFactor(0.3)
+        }
     }
 }
 
 #Preview {
     FeedCellView()
+        .frame(width: 150)
+    FeedCellView()
+        .frame(width: 300)
 }
