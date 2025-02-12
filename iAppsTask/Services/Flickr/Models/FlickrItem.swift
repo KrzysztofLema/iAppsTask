@@ -129,6 +129,42 @@ struct FlickrItem: Identifiable, Codable, Hashable {
                 author: "Visual Photons",
                 authorId: "127489829@N06",
                 tags: "ras al khaimah uae cat"
+            ),
+            FlickrItem(
+                id: "54322143104",
+                title: "Living the life",
+                link: "https://www.flickr.com/photos/127489829@N06/54322143104/",
+                media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322143104_073ea5c581_m.jpg"),
+                dateTaken: now.addingTimeInterval(hours: -2),
+                description: "Cat living the life in UAE",
+                published: now.addingTimeInterval(hours: -1),
+                author: "Visual Photons",
+                authorId: "127489829@N06",
+                tags: "ras al khaimah uae cat"
+            ),
+            FlickrItem(
+                id: "54322143104",
+                title: "Living the life",
+                link: "https://www.flickr.com/photos/127489829@N06/54322143104/",
+                media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322143104_073ea5c581_m.jpg"),
+                dateTaken: now.addingTimeInterval(hours: -2),
+                description: "Cat living the life in UAE",
+                published: now.addingTimeInterval(hours: -1),
+                author: "Visual Photons",
+                authorId: "127489829@N06",
+                tags: "ras al khaimah uae cat"
+            ),
+            FlickrItem(
+                id: "54322143104",
+                title: "Living the life",
+                link: "https://www.flickr.com/photos/127489829@N06/54322143104/",
+                media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322143104_073ea5c581_m.jpg"),
+                dateTaken: now.addingTimeInterval(hours: -2),
+                description: "Cat living the life in UAE",
+                published: now.addingTimeInterval(hours: -1),
+                author: "Visual Photons",
+                authorId: "127489829@N06",
+                tags: "ras al khaimah uae cat"
             )
         ]
     }

@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct ImageLoaderView: View {
-    
+struct ImageLoaderView: View {    
     var urlString: String = "https://picsum.photos/600/600"
     var resizingMode: ContentMode = .fill
     
