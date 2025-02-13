@@ -84,8 +84,9 @@ struct FlickrDetailView: View {
             }
         })
         .showPlayer(showPlayer: $viewModel.showPlayerView, content: {
-            Rectangle()
-                .frame(height: 80)
+            PlayerView(viewModel: PlayerViewViewModel())
+                .frame(maxHeight: .infinity, alignment: .bottom)
+                .offset(y: -80)
         })
         .scrollIndicators(.hidden)
         .ignoresSafeArea(edges: .top)
