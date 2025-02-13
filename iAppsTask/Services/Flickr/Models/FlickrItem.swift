@@ -107,7 +107,7 @@ struct FlickrItem: Identifiable, Codable, Hashable {
         let now = Date()
         return [
             FlickrItem(
-                id: "54322719959",
+                id: UUID().uuidString,
                 title: "Charlie and Freddie",
                 link: "https://www.flickr.com/photos/stuart166axe/54322719959/",
                 media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322719959_6e427762af_m.jpg"),
@@ -119,7 +119,7 @@ struct FlickrItem: Identifiable, Codable, Hashable {
                 tags: "charlie charlieboy cat gingercat"
             ),
             FlickrItem(
-                id: "54322143104",
+                id: UUID().uuidString,
                 title: "Living the life",
                 link: "https://www.flickr.com/photos/127489829@N06/54322143104/",
                 media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322143104_073ea5c581_m.jpg"),
@@ -131,7 +131,7 @@ struct FlickrItem: Identifiable, Codable, Hashable {
                 tags: "ras al khaimah uae cat"
             ),
             FlickrItem(
-                id: "54322143104",
+                id:  UUID().uuidString,
                 title: "Living the life",
                 link: "https://www.flickr.com/photos/127489829@N06/54322143104/",
                 media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322143104_073ea5c581_m.jpg"),
@@ -143,7 +143,7 @@ struct FlickrItem: Identifiable, Codable, Hashable {
                 tags: "ras al khaimah uae cat"
             ),
             FlickrItem(
-                id: "54322143104",
+                id: UUID().uuidString,
                 title: "Living the life",
                 link: "https://www.flickr.com/photos/127489829@N06/54322143104/",
                 media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322143104_073ea5c581_m.jpg"),
@@ -155,7 +155,7 @@ struct FlickrItem: Identifiable, Codable, Hashable {
                 tags: "ras al khaimah uae cat"
             ),
             FlickrItem(
-                id: "54322143104",
+                id: UUID().uuidString,
                 title: "Living the life",
                 link: "https://www.flickr.com/photos/127489829@N06/54322143104/",
                 media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322143104_073ea5c581_m.jpg"),

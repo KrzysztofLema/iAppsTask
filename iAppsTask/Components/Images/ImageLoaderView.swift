@@ -13,23 +13,27 @@ struct ImageLoaderView: View {
     var opacity: Double = 1
     
     var body: some View {
-        AsyncImage(url: URL(string: urlString)) { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: resizingMode)
-                .opacity(opacity)
-                .allowsHitTesting(false)
-        } placeholder: {
-            ProgressView()
-        }
-        .clipped()
+        Rectangle()
+            .opacity(0.00001)
+            .overlay {
+                AsyncImage(url: URL(string: urlString)) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: resizingMode)
+                        .opacity(opacity)
+                        .allowsHitTesting(false)
+                } placeholder: {
+                    ProgressView()
+                }
+                .clipped()
+            }
     }
 }
 
 #Preview {
     ImageLoaderView()
         .frame(width: 100, height: 200)
-//        .anyButton(.highlight) {
-//            
-//        }
+    //        .anyButton(.highlight) {
+    //
+    //        }
 }

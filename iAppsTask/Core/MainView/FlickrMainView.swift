@@ -7,16 +7,21 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct FlickrMainView: View {
+    
     @State private var flickrFeed: [FlickrFeed] = FlickrFeed.mocks
+    @State var viewModel: FlickrMainViewModel
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 40){
-                ForEach(flickrFeed, id: \.id) { flickrFeed in
-                    categorySection(feed: flickrFeed)
+        NavigationStack(path: $viewModel.path) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 40){
+                    ForEach(flickrFeed, id: \.id) { flickrFeed in
+                        categorySection(feed: flickrFeed)
+                    }
                 }
             }
+            .navigationDestinationForCoreModule(path: $viewModel.path)
         }
     }
     
@@ -34,6 +39,9 @@ struct MainView: View {
                                 imageName: flickrItem.link,
                                 font: .caption
                             )
+                            .anyButton {
+                                viewModel.onFlickrItemPressed(flickrItem: flickrItem)
+                            }
                         }
                     }
                 }
@@ -44,11 +52,10 @@ struct MainView: View {
                 .scrollTargetLayout()
                 .scrollTargetBehavior(.viewAligned)
             }
-            .removeListRowFormatting()
         }
     }
 }
 
 #Preview {
-    MainView()
+    FlickrMainView(viewModel: FlickrMainViewModel())
 }

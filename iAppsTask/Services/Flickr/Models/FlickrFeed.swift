@@ -79,7 +79,7 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
                 items: FlickrItem.mocks
             ),
             FlickrFeed(
-                id: "mock_feed_1",
+                id: "mock_feed_3",
                 title: "Recent Uploads tagged cat",
                 link: "https://www.flickr.com/photos/tags/cat/",
                 description: "Recent cat photos from Flickr",
@@ -88,7 +88,7 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
                 items: FlickrItem.mocks
             ),
             FlickrFeed(
-                id: "mock_feed_1",
+                id: "mock_feed_4",
                 title: "Recent Uploads tagged cat",
                 link: "https://www.flickr.com/photos/tags/cat/",
                 description: "Recent cat photos from Flickr",

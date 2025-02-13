@@ -7,10 +7,13 @@
 
 import SwiftUI
 
-struct DetailView: View {
+struct FlickrDetailView: View {
     
     @State private var flicrkItem: FlickrItem = FlickrItem.mock
     @State private var scrollOffset: CGFloat = 0
+    
+    @State var viewModel: FlickrDetailViewModelViewModel
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -65,12 +68,32 @@ struct DetailView: View {
                 .padding()
             }
         }
+        .toolbar(content: {
+            ToolbarItemGroup(placement: .bottomBar) {
+                HStack(spacing: 20) {
+                    Text("Home")
+                        .anyButton {
+                            dismiss()
+                        }
+                    Text("Audio")
+                        .anyButton {
+                            viewModel.onPlayerButtonPressed()
+                        }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        })
+        .showPlayer(showPlayer: $viewModel.showPlayerView, content: {
+            Rectangle()
+                .frame(height: 80)
+        })
         .scrollIndicators(.hidden)
         .ignoresSafeArea(edges: .top)
         .frame(maxHeight: .infinity, alignment: .top)
         .onPreferenceChange(ScrollOffsetKey.self) { value in
             scrollOffset = -value
         }
+        .toolbar(.hidden, for: .navigationBar)
     }
     
     private func calculateImageOpacity(for offset: CGFloat) -> Double {
@@ -97,5 +120,5 @@ struct ScrollOffsetKey: PreferenceKey {
 }
 
 #Preview {
-    DetailView()
+    FlickrDetailView(viewModel: FlickrDetailViewModelViewModel())
 }

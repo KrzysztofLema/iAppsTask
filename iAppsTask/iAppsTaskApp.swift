@@ -11,7 +11,7 @@ import SwiftUI
 struct iAppsTaskApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            FlickrMainView(viewModel: FlickrMainViewModel())
         }
     }
 }
