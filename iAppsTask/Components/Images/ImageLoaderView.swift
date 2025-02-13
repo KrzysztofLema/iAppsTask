@@ -7,24 +7,22 @@
 
 import SwiftUI
 
-struct ImageLoaderView: View {    
+struct ImageLoaderView: View {
     var urlString: String = "https://picsum.photos/600/600"
     var resizingMode: ContentMode = .fill
+    var opacity: Double = 1
     
     var body: some View {
-        Rectangle()
-            .opacity(0.0001)
-            .overlay {
-                AsyncImage(url: URL(string: urlString), content: { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: resizingMode)
-                        .allowsHitTesting(false)
-                }, placeholder: {
-                    ProgressView()
-                })
-            }
-            .clipped()
+        AsyncImage(url: URL(string: urlString)) { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: resizingMode)
+                .opacity(opacity)
+                .allowsHitTesting(false)
+        } placeholder: {
+            ProgressView()
+        }
+        .clipped()
     }
 }
 
