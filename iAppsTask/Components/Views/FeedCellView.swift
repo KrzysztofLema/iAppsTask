@@ -13,14 +13,16 @@ struct FeedCellView: View {
     var font: Font = .title2
     
     var body: some View {
-        VStack {
-            ImageLoaderView()
-                .aspectRatio(1, contentMode: .fit)
-            Text(title)
-                .font(font)
-                .fontWeight(.semibold)
-                .lineLimit(1)
-                .minimumScaleFactor(0.3)
+        ZStack {
+            VStack {
+                ImageLoaderView()
+                    .aspectRatio(1, contentMode: .fit)
+                Text(title)
+                    .font(font)
+                    .fontWeight(.semibold)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.3)
+            }
         }
     }
 }
