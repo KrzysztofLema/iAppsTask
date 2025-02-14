@@ -9,12 +9,16 @@ import Observation
 
 @Observable
 @MainActor
-class FlickrDetailViewModelViewModel {
+final class FlickrDetailViewModelViewModel {
 
     var showPlayerView: Bool = false
     
     func onPlayerButtonPressed() {
         showPlayerView.toggle()
+    }
+    
+    func onClosePlayerButtonPressed() {
+        showPlayerView = false
     }
 }
 

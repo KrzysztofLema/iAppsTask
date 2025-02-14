@@ -1,5 +1,5 @@
 //
-//  ModalSupportView.swift
+//  PlayerSupportView.swift
 //  iAppsTask
 //
 //  Created by Krzysztof Lema on 13/02/2025.

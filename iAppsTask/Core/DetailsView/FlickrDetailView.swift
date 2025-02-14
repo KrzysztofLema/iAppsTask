@@ -83,10 +83,25 @@ struct FlickrDetailView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
         })
-        .showPlayer(showPlayer: $viewModel.showPlayerView, content: {
-            Rectangle()
-                .frame(height: 80)
+        .showPlayer(
+            showPlayer: $viewModel.showPlayerView,
+            content: {
+                PlayerView(
+                    viewModel: PlayerViewViewModel(
+                        onClosePressed: {
+                            viewModel.onClosePlayerButtonPressed()
+                        }
+                    )
+                )
+        .frame(maxHeight: .infinity, alignment: .bottom)
+        .offset(y: -80)
+        .transition(
+            .asymmetric(
+                insertion: .move(edge: .bottom).combined(with: .opacity),
+                removal: .move(edge: .bottom).combined(with: .opacity)
+            ))
         })
+        .animation(.default, value: viewModel.showPlayerView)
         .scrollIndicators(.hidden)
         .ignoresSafeArea(edges: .top)
         .frame(maxHeight: .infinity, alignment: .top)

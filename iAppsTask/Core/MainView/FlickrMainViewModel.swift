@@ -9,7 +9,7 @@ import Observation
 
 @Observable
 @MainActor
-class FlickrMainViewModel {
+final class FlickrMainViewModel {
     
     var path: [NavigationPathOption] = []
     
