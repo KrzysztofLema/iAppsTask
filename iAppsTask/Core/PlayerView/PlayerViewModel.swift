@@ -6,12 +6,41 @@
 //
 
 import Observation
+import SwiftUI
 
 @Observable
 @MainActor
-class PlayerViewViewModel {
+final class PlayerViewViewModel {
     
-    var isPlayerExpanded: Bool = false
+    var playerState: PlayerState = .collapsed
     var value: Float = 100
+    var dragOffset: CGFloat = 0
+    var onClosePressed: (() -> Void)?
     
+    func onCloseButtonPressed() {
+        onClosePressed?()
+    }
+    
+    func updatePlayerStateBasedOnDragOffset() {
+        guard playerState == .expanded || playerState == .collapsed else {
+            return 
+        }
+        
+        if playerState == .expanded, dragOffset > 5 {
+            playerState = .collapsed
+        } else if playerState == .collapsed, dragOffset < -5 {
+            playerState = .expanded
+        }
+    }
+    
+    func updateDragOffset(_ offset: CGFloat) {
+           dragOffset = offset
+    }
+    
+    init(
+        onClosePressed: (() -> Void)? = nil
+    ) {
+        self.onClosePressed = onClosePressed
+    }
 }
+

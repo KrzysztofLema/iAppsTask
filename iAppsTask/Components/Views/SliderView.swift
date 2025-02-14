@@ -9,33 +9,50 @@ import SwiftUI
 
 struct SliderView: View {
     
-    @Binding var progress: Float
     @State private var isDragging: Bool = false
+    @Binding var progress: Float
+    var progressBarMinHeight: CGFloat = 8
+    var progressBarMaxHeight: CGFloat = 16
     
     var body: some View {
         GeometryReader { proxy in
-            ZStack {
-                Rectangle()
-                    .foregroundStyle(.black.opacity(0.25))
-                    .frame(maxWidth: .infinity)
-                Rectangle()
-                    .foregroundStyle(.blue)
-                    .frame(width: proxy.size.width * CGFloat(self.progress / 100))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
+            progressBar(with: proxy)
             .gesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged({ value in
-                        isDragging = true
-                        self.progress = min(max(0, Float(value.location.x / proxy.size.width * 100)), 100)
-                    })
-                    .onEnded({ value in
-                        isDragging = false
-                    })
+                dragGestureRecognizer(with: proxy)
             )
         }
-        .frame(height: isDragging ? 16 : 8)
-        .frame(maxWidth: .infinity)
+        .frame(height: isDragging ? progressBarMaxHeight : progressBarMinHeight)
+    }
+    
+    private func progressBar(with proxy: GeometryProxy) -> some View{
+        ZStack {
+            bottomProgressBar
+            topProgressBar(with: proxy)
+        }
+    }
+    
+    private var bottomProgressBar: some View {
+        Rectangle()
+            .foregroundStyle(.black.opacity(0.25))
+            .frame(maxWidth: .infinity)
+    }
+    
+    private func topProgressBar(with proxy: GeometryProxy) -> some View {
+        Rectangle()
+            .foregroundStyle(.blue)
+            .frame(width: proxy.size.width * CGFloat(self.progress / 100))
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private func dragGestureRecognizer(with proxy: GeometryProxy) -> some Gesture  {
+        DragGesture(minimumDistance: 0)
+            .onChanged({ value in
+                isDragging = true
+                progress = min(max(0, Float(value.location.x / proxy.size.width * 100)), 100)
+            })
+            .onEnded({ value in
+                isDragging = false
+            })
     }
 }
 

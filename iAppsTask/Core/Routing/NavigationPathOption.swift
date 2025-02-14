@@ -9,6 +9,7 @@ import SwiftUI
 import Foundation
 
 enum NavigationPathOption: Hashable {
+    
     case feedDetail(feedItem: FlickrItem?)
 }
 

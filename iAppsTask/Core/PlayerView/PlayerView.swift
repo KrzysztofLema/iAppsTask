@@ -12,35 +12,66 @@ struct PlayerView: View {
     @State var viewModel: PlayerViewViewModel
     
     var body: some View {
-        VStack {
-            HStack {
-                Image(systemName: "backward.circle")
-                    .font(.title)
-                    .anyButton {
-                        
-                    }
-                Image(systemName: "play.circle")
-                    .font(.title)
-                    .anyButton {
-                        
-                    }
-                Image(systemName: "forward.circle")
-                    .font(.title)
-                    .anyButton {
-                        
-                    }
+        contentView
+    }
+    
+    private var contentView: some View {
+        ZStack {
+            if viewModel.playerState == .expanded {
+                darkBackgroundOpacity
             }
-            SliderView(progress: $viewModel.value)
+            ZStack {
+                switch viewModel.playerState {
+                case .expanded:
+                    expandedPlayerView
+                        .transition(.move(edge: .bottom))
+                case .collapsed:
+                    collapsedPlayerView
+                        .transition(.move(edge: .bottom))
+                }
+            }
+            .gesture(dragGesture)
+            .background(.white)
+            .zIndex(1)
+            .frame(maxHeight: .infinity, alignment: .bottom)
         }
-        .frame(height: viewModel.isPlayerExpanded ? 400 : 80)
-        .onTapGesture {
-            viewModel.isPlayerExpanded = true
-        }
-        .background(.white)
-        .animation(.default, value: viewModel.isPlayerExpanded)
+    }
+    
+    private var collapsedPlayerView: some View {
+        CollapsedPlayerView(viewModel: $viewModel)
+            .contentShape(Rectangle())
+    }
+    
+    private var expandedPlayerView: some View {
+        ExpandedPlayerView(viewModel: $viewModel)
+            .contentShape(Rectangle())
+    }
+    
+    private var dragGesture: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                viewModel.updateDragOffset(value.translation.height)
+            }
+            .onEnded { value in
+                viewModel.updatePlayerStateBasedOnDragOffset()
+                viewModel.dragOffset = 0
+            }
+    }
+    
+    private var darkBackgroundOpacity: some View {
+        Color
+            .black
+            .opacity(0.5)
+            .ignoresSafeArea()
+            .zIndex(0)
     }
 }
 
 #Preview {
     PlayerView(viewModel: PlayerViewViewModel())
+}
+
+enum PlayerState {
+    case expanded
+    case collapsed
 }

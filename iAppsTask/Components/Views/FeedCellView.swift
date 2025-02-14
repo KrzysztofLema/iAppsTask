@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FeedCellView: View {
+    
     var title: String = "Living the life"
     var imageName: String = Constants.randomImage
     var font: Font = .title2
