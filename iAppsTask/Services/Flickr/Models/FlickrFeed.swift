@@ -8,7 +8,11 @@
 import Foundation
 
 struct FlickrFeed: Identifiable, Codable, Hashable {
-    let id: String
+    
+    var id: String {
+        UUID().uuidString
+    }
+    
     let title: String
     let link: String
     let description: String
@@ -17,7 +21,6 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
     let items: [FlickrItem]
     
     enum CodingKeys: String, CodingKey {
-        case id
         case title
         case link
         case description
@@ -27,7 +30,6 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
     }
     
     internal init(
-        id: String,
         title: String,
         link: String,
         description: String,
@@ -35,7 +37,6 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
         generator: String,
         items: [FlickrItem]
     ) {
-        self.id = id
         self.title = title
         self.link = link
         self.description = description
@@ -46,7 +47,6 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
     
     var eventParameters: [String: Any] {
         let dict: [String: Any?] = [
-            "feed_\(CodingKeys.id.rawValue)": id,
             "feed_\(CodingKeys.title.rawValue)": title,
             "feed_\(CodingKeys.link.rawValue)": link,
             "feed_\(CodingKeys.modified.rawValue)": modified
@@ -61,7 +61,6 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
     static var mocks: [Self] {
         [
             FlickrFeed(
-                id: "mock_feed_1",
                 title: "Recent Uploads tagged cat",
                 link: "https://www.flickr.com/photos/tags/cat/",
                 description: "Recent cat photos from Flickr",
@@ -70,7 +69,6 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
                 items: FlickrItem.mocks
             ),
             FlickrFeed(
-                id: "mock_feed_2",
                 title: "Recent Uploads tagged dog",
                 link: "https://www.flickr.com/photos/tags/dog/",
                 description: "Recent dog photos from Flickr",
@@ -79,7 +77,6 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
                 items: FlickrItem.mocks
             ),
             FlickrFeed(
-                id: "mock_feed_3",
                 title: "Recent Uploads tagged cat",
                 link: "https://www.flickr.com/photos/tags/cat/",
                 description: "Recent cat photos from Flickr",
@@ -88,7 +85,6 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
                 items: FlickrItem.mocks
             ),
             FlickrFeed(
-                id: "mock_feed_4",
                 title: "Recent Uploads tagged cat",
                 link: "https://www.flickr.com/photos/tags/cat/",
                 description: "Recent cat photos from Flickr",

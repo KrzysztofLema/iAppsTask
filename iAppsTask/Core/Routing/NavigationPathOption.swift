@@ -10,7 +10,7 @@ import Foundation
 
 enum NavigationPathOption: Hashable {
     
-    case feedDetail(feedItem: FlickrItem?)
+    case feedDetail(feedItem: FlickrItem)
 }
 
 struct NavDestinationForCoreModuleViewModifier: ViewModifier {
@@ -22,7 +22,7 @@ struct NavDestinationForCoreModuleViewModifier: ViewModifier {
             .navigationDestination(for: NavigationPathOption.self) { newValue in
                 switch newValue {
                 case .feedDetail(feedItem: let feedItem):
-                    FlickrDetailView(viewModel: FlickrDetailViewModelViewModel())
+                    FlickrDetailView(viewModel: FlickrDetailViewModelViewModel(flicrkItem: feedItem))
                 }
             }
     }

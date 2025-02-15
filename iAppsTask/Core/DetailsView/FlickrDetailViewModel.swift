@@ -10,8 +10,14 @@ import Observation
 @Observable
 @MainActor
 final class FlickrDetailViewModelViewModel {
-
+    
+    private(set) var flicrkItem: FlickrItem = FlickrItem.mock
+    
     var showPlayerView: Bool = false
+    
+    init(flicrkItem: FlickrItem) {
+        self.flicrkItem = flicrkItem
+    }
     
     func onPlayerButtonPressed() {
         showPlayerView.toggle()
