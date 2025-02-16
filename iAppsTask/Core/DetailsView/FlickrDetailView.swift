@@ -98,6 +98,7 @@ struct FlickrDetailView: View {
                         }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .measureToolbarHeight(height: $viewModel.toolbarHeight)
             }
         })
         .showPlayer(
@@ -110,13 +111,13 @@ struct FlickrDetailView: View {
                         }
                     )
                 )
+                .offset(y: -viewModel.toolbarHeight)
                 .frame(maxHeight: .infinity, alignment: .bottom)
-                .offset(y: -80)
                 .transition(
-                    .asymmetric(
-                        insertion: .move(edge: .bottom).combined(with: .opacity),
-                        removal: .move(edge: .bottom).combined(with: .opacity)
-                    ))
+                   .asymmetric(
+                       insertion: .move(edge: .bottom).combined(with: .opacity),
+                       removal: .move(edge: .bottom).combined(with: .opacity)
+                   ))
             })
         .animation(.default, value: viewModel.showPlayerView)
         .scrollIndicators(.hidden)
