@@ -38,7 +38,7 @@ struct FeedCellView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 10) {
-                ImageLoaderView(urlString: imageURL, width: imageSize, height: imageSize)
+                GridImageView(urlString: imageURL, size: imageSize)
                     .aspectRatio(1, contentMode: .fit)
                 Text(title)
                     .adaptiveFont(.headline)

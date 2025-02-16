@@ -22,7 +22,7 @@ struct NavDestinationForCoreModuleViewModifier: ViewModifier {
             .navigationDestination(for: NavigationPathOption.self) { newValue in
                 switch newValue {
                 case .feedDetail(feedItem: let feedItem):
-                    FlickrDetailView(viewModel: FlickrDetailViewModelViewModel(flicrkItem: feedItem))
+                    FlickrDetailView(viewModel: FlickrDetailViewModel(flickrItem: feedItem))
                 }
             }
     }

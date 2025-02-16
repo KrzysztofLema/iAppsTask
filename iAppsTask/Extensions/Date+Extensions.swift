@@ -8,6 +8,7 @@
 import Foundation
 
 extension Date {
+    
     func addingTimeInterval(days: Int) -> Date {
         return self.addingTimeInterval(TimeInterval(days * 24 * 60 * 60))
     }
@@ -19,5 +20,12 @@ extension Date {
     func addingTimeInterval(minutes: Int) -> Date {
         return self.addingTimeInterval(TimeInterval(minutes * 60))
     }
+    
+    func formattedString(using format: String = "yyyy-MM-dd HH:mm") -> String {
+          let formatter = DateFormatter()
+          formatter.dateFormat = format
+          formatter.locale = Locale.current
+          return formatter.string(from: self)
+      }
 }
 

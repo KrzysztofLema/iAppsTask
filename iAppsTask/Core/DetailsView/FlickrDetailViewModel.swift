@@ -4,29 +4,34 @@
 //
 //  Created by Krzysztof Lema on 13/02/2025.
 //
-
+import SwiftUI
 import Observation
 
 @Observable
-@MainActor
-final class FlickrDetailViewModelViewModel {
+final class FlickrDetailViewModel {
     
-    private(set) var flicrkItem: FlickrItem = FlickrItem.mock
-    
-    var showPlayerView: Bool = false
-    
-    init(flicrkItem: FlickrItem) {
-        self.flicrkItem = flicrkItem
+    let flickrItem: FlickrItem
+    var showPlayerView = false
+    var scrollOffset: CGFloat = 0
+    var imageHeight: CGFloat = 0
+
+    init(flickrItem: FlickrItem) {
+        self.flickrItem = flickrItem
     }
     
+    var takenDate: String {
+        flickrItem.dateTaken.formattedString()
+    }
+    
+    var publishedDate: String {
+        flickrItem.published.formattedString()
+    }
+
     func onPlayerButtonPressed() {
         showPlayerView.toggle()
     }
-    
+
     func onClosePlayerButtonPressed() {
         showPlayerView = false
     }
 }
-
-
-
