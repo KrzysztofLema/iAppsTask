@@ -8,24 +8,22 @@
 import Foundation
 
 extension Date {
-    
     func addingTimeInterval(days: Int) -> Date {
-        return self.addingTimeInterval(TimeInterval(days * 24 * 60 * 60))
+        addingTimeInterval(TimeInterval(days * 24 * 60 * 60))
     }
-    
-    func addingTimeInterval(hours: Int) -> Date {
-        return self.addingTimeInterval(TimeInterval(hours * 60 * 60))
-    }
-    
-    func addingTimeInterval(minutes: Int) -> Date {
-        return self.addingTimeInterval(TimeInterval(minutes * 60))
-    }
-    
-    func formattedString(using format: String = "yyyy-MM-dd HH:mm") -> String {
-          let formatter = DateFormatter()
-          formatter.dateFormat = format
-          formatter.locale = Locale.current
-          return formatter.string(from: self)
-      }
-}
 
+    func addingTimeInterval(hours: Int) -> Date {
+        addingTimeInterval(TimeInterval(hours * 60 * 60))
+    }
+
+    func addingTimeInterval(minutes: Int) -> Date {
+        addingTimeInterval(TimeInterval(minutes * 60))
+    }
+
+    func formattedString(using format: String = "yyyy-MM-dd HH:mm") -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        formatter.locale = Locale.current
+        return formatter.string(from: self)
+    }
+}

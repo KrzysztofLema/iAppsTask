@@ -1,0 +1,15 @@
+--swiftversion 5.9
+--indent 4
+--indentcase true
+--trimwhitespace always
+--maxwidth 120
+--wraparguments before-first
+--wrapcollections before-first
+--commas inline
+--semicolons never
+--extensionacl on-declarations
+--ranges nospace
+--header ignore
+--stripunusedargs closure-only
+--self init-only
+--exclude Pods,Generated,*.generated.swift,.build

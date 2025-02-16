@@ -12,15 +12,14 @@ enum ButtonStyleOption {
 }
 
 extension View {
-    
     @ViewBuilder
     func anyButton(_ option: ButtonStyleOption = .plain, action: @escaping () -> Void) -> some View {
         switch option {
-        case .plain:
-            self.plainButton(action: action)
+            case .plain:
+                plainButton(action: action)
         }
     }
-    
+
     private func plainButton(action: @escaping () -> Void) -> some View {
         Button {
             action()
@@ -35,9 +34,7 @@ extension View {
     VStack {
         Text("Hello, world!")
             .callToActionButton()
-            .anyButton(action: {
-                
-            })
+            .anyButton(action: {})
             .padding()
     }
 }

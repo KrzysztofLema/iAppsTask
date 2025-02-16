@@ -6,6 +6,5 @@
 //
 
 enum FeedCategoryType: String {
-    
     case dog, cat, boats, moutains, cars
 }

@@ -5,16 +5,15 @@
 //  Created by Krzysztof Lema on 16/02/2025.
 //
 
-
 import SwiftUI
 
 extension View {
     public func adaptivePadding(_ edges: Edge.Set = .all, _ length: CGFloat? = nil) -> some View {
-        self.modifier(AdaptivePadding(configuration: .edges(edges, length: length)))
+        modifier(AdaptivePadding(configuration: .edges(edges, length: length)))
     }
 
     public func adaptivePadding(_ edgeInsets: EdgeInsets) -> some View {
-        self.modifier(AdaptivePadding(configuration: .edgeInsets(edgeInsets)))
+        modifier(AdaptivePadding(configuration: .edgeInsets(edgeInsets)))
     }
 }
 
@@ -31,21 +30,21 @@ private struct AdaptivePadding: ViewModifier {
 
     private var adjustedPadding: CGFloat {
         if UIDevice.current.userInterfaceIdiom == .pad {
-            return horizontalSizeClass == .compact ? 20 : 40
+            horizontalSizeClass == .compact ? 20 : 40
         } else {
-            return 16
+            16
         }
     }
 
     @ViewBuilder
     func body(content: Content) -> some View {
-        switch self.configuration {
-        case let .edgeInsets(edgeInsets):
-            content.padding(edgeInsets.apply(adjustedPadding))
-        case let .edges(edges, .some(length)):
-            content.padding(edges, length + adjustedPadding)
-        case let .edges(edges, .none):
-            content.padding(edges).padding(edges, adjustedPadding)
+        switch configuration {
+            case let .edgeInsets(edgeInsets):
+                content.padding(edgeInsets.apply(adjustedPadding))
+            case let .edges(edges, .some(length)):
+                content.padding(edges, length + adjustedPadding)
+            case let .edges(edges, .none):
+                content.padding(edges).padding(edges, adjustedPadding)
         }
     }
 }
@@ -53,10 +52,10 @@ private struct AdaptivePadding: ViewModifier {
 extension EdgeInsets {
     fileprivate func apply(_ adaptivePadding: CGFloat) -> EdgeInsets {
         EdgeInsets(
-            top: self.top == 0 ? 0 : self.top + adaptivePadding,
-            leading: self.leading == 0 ? 0 : self.leading + adaptivePadding,
-            bottom: self.bottom == 0 ? 0 : self.bottom + adaptivePadding,
-            trailing: self.trailing == 0 ? 0 : self.trailing + adaptivePadding
+            top: top == 0 ? 0 : top + adaptivePadding,
+            leading: leading == 0 ? 0 : leading + adaptivePadding,
+            bottom: bottom == 0 ? 0 : bottom + adaptivePadding,
+            trailing: trailing == 0 ? 0 : trailing + adaptivePadding
         )
     }
 }

@@ -12,7 +12,7 @@ extension View {
         _ textStyle: Font.TextStyle,
         configure: @escaping (Font) -> Font = { $0 }
     ) -> some View {
-        self.modifier(AdaptiveFont(textStyle: textStyle, configure: configure))
+        modifier(AdaptiveFont(textStyle: textStyle, configure: configure))
     }
 }
 
@@ -26,28 +26,28 @@ private struct AdaptiveFont: ViewModifier {
     private var adaptiveSize: CGFloat {
         let baseScaling: CGFloat = {
             switch dynamicTypeSize {
-            case .xSmall, .small, .medium:
-                return 0
-            case .large:
-                return 1
-            case .xLarge:
-                return 2
-            case .xxLarge:
-                return 4
-            case .xxxLarge:
-                return 6
-            case .accessibility1:
-                return 8
-            case .accessibility2:
-                return 10
-            case .accessibility3:
-                return 12
-            case .accessibility4:
-                return 14
-            case .accessibility5:
-                return 16
-            @unknown default:
-                return 2
+                case .xSmall, .small, .medium:
+                    return 0
+                case .large:
+                    return 1
+                case .xLarge:
+                    return 2
+                case .xxLarge:
+                    return 4
+                case .xxxLarge:
+                    return 6
+                case .accessibility1:
+                    return 8
+                case .accessibility2:
+                    return 10
+                case .accessibility3:
+                    return 12
+                case .accessibility4:
+                    return 14
+                case .accessibility5:
+                    return 16
+                @unknown default:
+                    return 2
             }
         }()
 
@@ -57,7 +57,7 @@ private struct AdaptiveFont: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        content.font(self.configure(.system(textStyle, design: .default)))
-            .padding(adaptiveSize / 2) 
+        content.font(configure(.system(textStyle, design: .default)))
+            .padding(adaptiveSize / 2)
     }
 }

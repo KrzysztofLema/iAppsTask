@@ -8,33 +8,27 @@
 import SwiftUI
 
 struct FeedCellView: View {
-    
     var title: String = "Living the lifeasdasdasd"
     var imageURL: String = Constants.randomImage
-    
-    private let cellSize: CGFloat = {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            return 200
-        case .phone:
-            return 140
-        default:
-            return 100
-        }
-    }()
-    
-    private let imageSize: CGFloat = {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            return 140
-        case .phone:
-            return 80
-        default:
-            return 100
-        }
-    }()
 
-    
+    private let cellSize: CGFloat = switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            200
+        case .phone:
+            140
+        default:
+            100
+    }
+
+    private let imageSize: CGFloat = switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            140
+        case .phone:
+            80
+        default:
+            100
+    }
+
     var body: some View {
         ZStack {
             VStack(spacing: 10) {

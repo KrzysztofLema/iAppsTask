@@ -8,13 +8,16 @@
 import SwiftUI
 
 @main
+// swiftlint:disable:next type_name
 struct iAppsTaskApp: App {
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
+
     var body: some Scene {
         WindowGroup {
-            FlickrMainView(viewModel: FlickrMainViewModel(interactor: CoreInteractor(container: delegate.dependencies.container)))
+            FlickrMainView(viewModel: FlickrMainViewModel(interactor: CoreInteractor(
+                container: delegate.dependencies
+                    .container
+            )))
         }
     }
 }
