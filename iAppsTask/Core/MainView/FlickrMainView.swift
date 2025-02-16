@@ -9,34 +9,46 @@ import SwiftUI
 
 struct FlickrMainView: View {
     
-    @State private var flickrFeed: [FlickrFeed] = FlickrFeed.mocks
     @State var viewModel: FlickrMainViewModel
     
     var body: some View {
         NavigationStack(path: $viewModel.path) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 40){
-                    ForEach(flickrFeed, id: \.id) { flickrFeed in
+                    ForEach(viewModel.flickrFeed, id: \.id) { flickrFeed in
                         categorySection(feed: flickrFeed)
                     }
                 }
             }
             .navigationDestinationForCoreModule(path: $viewModel.path)
+            .onFirstTask {
+                await viewModel.loadCatFeed()
+            }
+            .onFirstTask {
+                await viewModel.loadDogFeed()
+            }
+            .onFirstTask {
+                await viewModel.loadMoutainsFeed()
+            }
+            .onFirstTask {
+                await viewModel.loadBoatsFeed()
+            }
         }
     }
     
     private func categorySection(feed: FlickrFeed) -> some View {
         VStack(alignment: .leading) {
             Text(feed.title)
-                .font(.title)
+                .font(.title2)
                 .fontWeight(.semibold)
+                .lineLimit(1)
             ZStack {
                 ScrollView(.horizontal) {
                     HStack(spacing: 12) {
                         ForEach(feed.items, id: \.id) { flickrItem in
                             FeedCellView(
                                 title: flickrItem.title,
-                                imageName: flickrItem.link,
+                                imageURL: flickrItem.media.url,
                                 font: .caption
                             )
                             .anyButton {
@@ -57,5 +69,11 @@ struct FlickrMainView: View {
 }
 
 #Preview {
-    FlickrMainView(viewModel: FlickrMainViewModel())
+    FlickrMainView(
+        viewModel: FlickrMainViewModel(
+            interactor: CoreInteractor(
+                container: DevPreview.shared.container)
+        )
+    )
+    .previewEnvironment()
 }

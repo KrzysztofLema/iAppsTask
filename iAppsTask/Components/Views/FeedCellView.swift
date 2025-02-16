@@ -10,13 +10,13 @@ import SwiftUI
 struct FeedCellView: View {
     
     var title: String = "Living the life"
-    var imageName: String = Constants.randomImage
+    var imageURL: String = Constants.randomImage
     var font: Font = .title2
     
     var body: some View {
         ZStack {
             VStack {
-                ImageLoaderView()
+                ImageLoaderView(urlString: imageURL)
                     .aspectRatio(1, contentMode: .fit)
                 Text(title)
                     .font(font)

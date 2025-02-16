@@ -8,7 +8,11 @@
 import Foundation
 
 struct FlickrItem: Identifiable, Codable, Hashable {
-    let id: String
+  
+    var id: String {
+        UUID().uuidString
+    }
+    
     let title: String
     let link: String
     let media: FlickrMedia
@@ -20,7 +24,6 @@ struct FlickrItem: Identifiable, Codable, Hashable {
     let tags: String
     
     enum CodingKeys: String, CodingKey {
-        case id
         case title
         case link
         case media
@@ -33,7 +36,6 @@ struct FlickrItem: Identifiable, Codable, Hashable {
     }
     
     internal init(
-        id: String,
         title: String,
         link: String,
         media: FlickrMedia,
@@ -44,7 +46,6 @@ struct FlickrItem: Identifiable, Codable, Hashable {
         authorId: String,
         tags: String
     ) {
-        self.id = id
         self.title = title
         self.link = link
         self.media = media
@@ -58,7 +59,6 @@ struct FlickrItem: Identifiable, Codable, Hashable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(String.self, forKey: .id)
         title = try container.decode(String.self, forKey: .title)
         link = try container.decode(String.self, forKey: .link)
         media = try container.decode(FlickrMedia.self, forKey: .media)
@@ -76,7 +76,6 @@ struct FlickrItem: Identifiable, Codable, Hashable {
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
         try container.encode(title, forKey: .title)
         try container.encode(link, forKey: .link)
         try container.encode(media, forKey: .media)
@@ -90,7 +89,6 @@ struct FlickrItem: Identifiable, Codable, Hashable {
     
     var eventParameters: [String: Any] {
         let dict: [String: Any?] = [
-            "item_\(CodingKeys.id.rawValue)": id,
             "item_\(CodingKeys.title.rawValue)": title,
             "item_\(CodingKeys.authorId.rawValue)": authorId,
             "item_\(CodingKeys.dateTaken.rawValue)": dateTaken,
@@ -107,7 +105,6 @@ struct FlickrItem: Identifiable, Codable, Hashable {
         let now = Date()
         return [
             FlickrItem(
-                id: UUID().uuidString,
                 title: "Charlie and Freddie",
                 link: "https://www.flickr.com/photos/stuart166axe/54322719959/",
                 media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322719959_6e427762af_m.jpg"),
@@ -119,7 +116,6 @@ struct FlickrItem: Identifiable, Codable, Hashable {
                 tags: "charlie charlieboy cat gingercat"
             ),
             FlickrItem(
-                id: UUID().uuidString,
                 title: "Living the life",
                 link: "https://www.flickr.com/photos/127489829@N06/54322143104/",
                 media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322143104_073ea5c581_m.jpg"),
@@ -131,7 +127,6 @@ struct FlickrItem: Identifiable, Codable, Hashable {
                 tags: "ras al khaimah uae cat"
             ),
             FlickrItem(
-                id:  UUID().uuidString,
                 title: "Living the life",
                 link: "https://www.flickr.com/photos/127489829@N06/54322143104/",
                 media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322143104_073ea5c581_m.jpg"),
@@ -143,7 +138,6 @@ struct FlickrItem: Identifiable, Codable, Hashable {
                 tags: "ras al khaimah uae cat"
             ),
             FlickrItem(
-                id: UUID().uuidString,
                 title: "Living the life",
                 link: "https://www.flickr.com/photos/127489829@N06/54322143104/",
                 media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322143104_073ea5c581_m.jpg"),
@@ -155,7 +149,6 @@ struct FlickrItem: Identifiable, Codable, Hashable {
                 tags: "ras al khaimah uae cat"
             ),
             FlickrItem(
-                id: UUID().uuidString,
                 title: "Living the life",
                 link: "https://www.flickr.com/photos/127489829@N06/54322143104/",
                 media: FlickrMedia(url: "https://live.staticflickr.com/65535/54322143104_073ea5c581_m.jpg"),

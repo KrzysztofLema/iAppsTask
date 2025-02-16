@@ -9,17 +9,19 @@ import SwiftUI
 
 struct FlickrDetailView: View {
     
-    @State private var flicrkItem: FlickrItem = FlickrItem.mock
     @State private var scrollOffset: CGFloat = 0
-    
     @State var viewModel: FlickrDetailViewModelViewModel
+    
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack(alignment: .top) {
             GeometryReader { proxy in
-                ImageLoaderView(opacity: calculateImageOpacity(for: scrollOffset))
-                    .frame(width: proxy.size.width, height: 400)
+                ImageLoaderView(
+                    urlString: viewModel.flicrkItem.media.url,
+                    opacity: calculateImageOpacity(for: scrollOffset)
+                )
+                .frame(width: proxy.size.width, height: 400)
             }
             
             ScrollView {
@@ -32,7 +34,7 @@ struct FlickrDetailView: View {
                 Spacer()
                     .frame(height: 400)
                 VStack(alignment: .leading, spacing: 12) {
-                    Text(flicrkItem.title)
+                    Text(viewModel.flicrkItem.title)
                         .font(.title)
                         .bold()
                         .lineLimit(nil)
@@ -42,20 +44,26 @@ struct FlickrDetailView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack(alignment: .lastTextBaseline) {
                                 Text("Author:")
-                                Text(flicrkItem.author)
+                                Text(viewModel.flicrkItem.author)
                                     .font(.headline)
                             }
                             
                             HStack(alignment: .lastTextBaseline) {
                                 Text("Date taken:")
-                                Text(flicrkItem.dateTaken, style: .date)
-                                    .font(.headline)
+                                Text(
+                                    viewModel.flicrkItem.dateTaken,
+                                    style: .date
+                                )
+                                .font(.headline)
                             }
                             
                             HStack(alignment: .lastTextBaseline) {
                                 Text("Date published:")
-                                Text(flicrkItem.published, style: .date)
-                                    .font(.headline)
+                                Text(
+                                    viewModel.flicrkItem.published,
+                                    style: .date
+                                )
+                                .font(.headline)
                             }
                         }
                         
@@ -93,14 +101,14 @@ struct FlickrDetailView: View {
                         }
                     )
                 )
-        .frame(maxHeight: .infinity, alignment: .bottom)
-        .offset(y: -80)
-        .transition(
-            .asymmetric(
-                insertion: .move(edge: .bottom).combined(with: .opacity),
-                removal: .move(edge: .bottom).combined(with: .opacity)
-            ))
-        })
+                .frame(maxHeight: .infinity, alignment: .bottom)
+                .offset(y: -80)
+                .transition(
+                    .asymmetric(
+                        insertion: .move(edge: .bottom).combined(with: .opacity),
+                        removal: .move(edge: .bottom).combined(with: .opacity)
+                    ))
+            })
         .animation(.default, value: viewModel.showPlayerView)
         .scrollIndicators(.hidden)
         .ignoresSafeArea(edges: .top)
@@ -135,5 +143,5 @@ struct ScrollOffsetKey: PreferenceKey {
 }
 
 #Preview {
-    FlickrDetailView(viewModel: FlickrDetailViewModelViewModel())
+    FlickrDetailView(viewModel: FlickrDetailViewModelViewModel(flicrkItem: .mock))
 }

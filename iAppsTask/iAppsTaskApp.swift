@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct iAppsTaskApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     var body: some Scene {
         WindowGroup {
-            FlickrMainView(viewModel: FlickrMainViewModel())
+            FlickrMainView(viewModel: FlickrMainViewModel(interactor: CoreInteractor(container: delegate.dependencies.container)))
         }
     }
 }
