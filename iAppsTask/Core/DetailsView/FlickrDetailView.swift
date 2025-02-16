@@ -8,33 +8,33 @@
 import SwiftUI
 
 struct FlickrDetailView: View {
-    
-    @State private var scrollOffset: CGFloat = 0
-    @State var viewModel: FlickrDetailViewModelViewModel
+
+    @State var viewModel: FlickrDetailViewModel
     
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack(alignment: .top) {
             GeometryReader { proxy in
-                ImageLoaderView(
-                    urlString: viewModel.flicrkItem.media.url,
-                    opacity: calculateImageOpacity(for: scrollOffset)
+                FlickrDetailImageView(
+                    proxy: proxy,
+                    viewModel: viewModel,
+                    scrollOffset: $viewModel.scrollOffset
                 )
-                .frame(width: proxy.size.width, height: 400)
             }
             
             ScrollView {
-                GeometryReader { proxy in
-                    Color.clear.preference(
-                        key: ScrollOffsetKey.self,
-                        value: proxy.frame(in: .global).minY
-                    )
+                GeometryReader { geometry in
+                    Color.clear
+                        .preference(
+                            key: ScrollOffsetKey.self,
+                            value: -geometry.frame(in: .global).minY
+                        )
                 }
                 Spacer()
-                    .frame(height: 400)
+                    .frame(height: viewModel.imageHeight)
                 VStack(alignment: .leading, spacing: 12) {
-                    Text(viewModel.flicrkItem.title)
+                    Text(viewModel.flickrItem.title)
                         .font(.title)
                         .bold()
                         .lineLimit(nil)
@@ -44,30 +44,33 @@ struct FlickrDetailView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack(alignment: .lastTextBaseline) {
                                 Text("Author:")
-                                Text(viewModel.flicrkItem.author)
+                                Text(viewModel.flickrItem.author)
                                     .font(.headline)
+                                    .lineLimit(1)
                             }
                             
                             HStack(alignment: .lastTextBaseline) {
                                 Text("Date taken:")
                                 Text(
-                                    viewModel.flicrkItem.dateTaken,
+                                    viewModel.flickrItem.dateTaken,
                                     style: .date
                                 )
                                 .font(.headline)
+                                .lineLimit(1)
                             }
                             
                             HStack(alignment: .lastTextBaseline) {
                                 Text("Date published:")
                                 Text(
-                                    viewModel.flicrkItem.published,
+                                    viewModel.flickrItem.published,
                                     style: .date
                                 )
                                 .font(.headline)
+                                .lineLimit(1)
                             }
                         }
                         
-                        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+                        Text(String.loremIpsum(paragraphs: 3))
                             .font(.subheadline)
                             .fontWeight(.medium)
                     }
@@ -75,6 +78,12 @@ struct FlickrDetailView: View {
                 }
                 .padding()
             }
+        }
+        .onPreferenceChange(ScrollOffsetKey.self) { value in
+            viewModel.scrollOffset = value
+        }
+        .onPreferenceChange(ImageHeightPreferenceKey.self) { newHeight in
+            viewModel.imageHeight = newHeight
         }
         .toolbar(content: {
             ToolbarItemGroup(placement: .bottomBar) {
@@ -111,37 +120,27 @@ struct FlickrDetailView: View {
             })
         .animation(.default, value: viewModel.showPlayerView)
         .scrollIndicators(.hidden)
-        .ignoresSafeArea(edges: .top)
         .frame(maxHeight: .infinity, alignment: .top)
-        .onPreferenceChange(ScrollOffsetKey.self) { value in
-            scrollOffset = -value
-        }
         .toolbar(.hidden, for: .navigationBar)
+        .ignoresSafeArea()
     }
     
     private func calculateImageOpacity(for offset: CGFloat) -> Double {
-        let startFade: CGFloat = 50
-        let endFade: CGFloat = 200
-        let minOpacity: Double = 0.7
-        
-        if offset < startFade {
-            return 1.0
-        } else if offset > endFade {
-            return minOpacity
-        } else {
-            let fadeProgress = (offset - startFade) / (endFade - startFade)
-            return max(minOpacity, 1.0 - fadeProgress)
-        }
-    }
-}
-
-struct ScrollOffsetKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
-    }
+         let startFade: CGFloat = 50
+         let endFade: CGFloat = 200
+         let maxOpacity: Double = 0.7
+         
+         if offset < startFade {
+             return 0.0
+         } else if offset > endFade {
+             return maxOpacity
+         } else {
+             let fadeProgress = (offset - startFade) / (endFade - startFade)
+             return min(maxOpacity, fadeProgress * maxOpacity)
+         }
+     }
 }
 
 #Preview {
-    FlickrDetailView(viewModel: FlickrDetailViewModelViewModel(flicrkItem: .mock))
+    FlickrDetailView(viewModel: FlickrDetailViewModel(flickrItem: .mock))
 }
