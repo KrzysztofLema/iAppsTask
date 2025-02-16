@@ -1,5 +1,5 @@
 //
-//  DetailView.swift
+//  FlickrDetailView.swift
 //  iAppsTask
 //
 //  Created by Krzysztof Lema on 13/02/2025.
@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct FlickrDetailView: View {
-
     @State var viewModel: FlickrDetailViewModel
-    
+
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
         ZStack(alignment: .top) {
             GeometryReader { proxy in
@@ -22,7 +21,7 @@ struct FlickrDetailView: View {
                     scrollOffset: $viewModel.scrollOffset
                 )
             }
-            
+
             ScrollView {
                 GeometryReader { geometry in
                     Color.clear
@@ -39,7 +38,7 @@ struct FlickrDetailView: View {
                         .bold()
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
-                    
+
                     VStack(alignment: .leading, spacing: 20) {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack(alignment: .lastTextBaseline) {
@@ -48,7 +47,7 @@ struct FlickrDetailView: View {
                                     .font(.headline)
                                     .lineLimit(1)
                             }
-                            
+
                             HStack(alignment: .lastTextBaseline) {
                                 Text("Date taken:")
                                 Text(
@@ -58,7 +57,7 @@ struct FlickrDetailView: View {
                                 .font(.headline)
                                 .lineLimit(1)
                             }
-                            
+
                             HStack(alignment: .lastTextBaseline) {
                                 Text("Date published:")
                                 Text(
@@ -69,12 +68,11 @@ struct FlickrDetailView: View {
                                 .lineLimit(1)
                             }
                         }
-                        
+
                         Text(String.loremIpsum(paragraphs: 3))
                             .font(.subheadline)
                             .fontWeight(.medium)
                     }
-                    
                 }
                 .padding()
             }
@@ -114,32 +112,34 @@ struct FlickrDetailView: View {
                 .offset(y: -viewModel.toolbarHeight)
                 .frame(maxHeight: .infinity, alignment: .bottom)
                 .transition(
-                   .asymmetric(
-                       insertion: .move(edge: .bottom).combined(with: .opacity),
-                       removal: .move(edge: .bottom).combined(with: .opacity)
-                   ))
-            })
+                    .asymmetric(
+                        insertion: .move(edge: .bottom).combined(with: .opacity),
+                        removal: .move(edge: .bottom).combined(with: .opacity)
+                    )
+                )
+            }
+        )
         .animation(.default, value: viewModel.showPlayerView)
         .scrollIndicators(.hidden)
         .frame(maxHeight: .infinity, alignment: .top)
         .toolbar(.hidden, for: .navigationBar)
         .ignoresSafeArea()
     }
-    
+
     private func calculateImageOpacity(for offset: CGFloat) -> Double {
-         let startFade: CGFloat = 50
-         let endFade: CGFloat = 200
-         let maxOpacity: Double = 0.7
-         
-         if offset < startFade {
-             return 0.0
-         } else if offset > endFade {
-             return maxOpacity
-         } else {
-             let fadeProgress = (offset - startFade) / (endFade - startFade)
-             return min(maxOpacity, fadeProgress * maxOpacity)
-         }
-     }
+        let startFade: CGFloat = 50
+        let endFade: CGFloat = 200
+        let maxOpacity = 0.7
+
+        if offset < startFade {
+            return 0.0
+        } else if offset > endFade {
+            return maxOpacity
+        } else {
+            let fadeProgress = (offset - startFade) / (endFade - startFade)
+            return min(maxOpacity, fadeProgress * maxOpacity)
+        }
+    }
 }
 
 #Preview {

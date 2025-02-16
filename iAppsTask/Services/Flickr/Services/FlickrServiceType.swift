@@ -7,6 +7,5 @@
 
 @MainActor
 protocol FlickrServiceType {
-    
     func fetchFeedFromFlickr(category: FeedCategoryType) async throws -> FlickrFeed
 }

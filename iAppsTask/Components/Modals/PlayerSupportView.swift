@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct PlayerSupportView<Content: View>: View {
-    
     @Binding var showPlayer: Bool
     @ViewBuilder var content: Content
-    
+
     var body: some View {
         ZStack {
             if showPlayer {
@@ -28,7 +27,7 @@ struct PlayerSupportView<Content: View>: View {
 
 extension View {
     func showPlayer(showPlayer: Binding<Bool>, @ViewBuilder content: () -> some View) -> some View {
-        self.overlay(alignment: .bottom) {
+        overlay(alignment: .bottom) {
             PlayerSupportView(showPlayer: showPlayer) {
                 content()
             }
@@ -37,10 +36,9 @@ extension View {
 }
 
 private struct PreviewView: View {
-    
     @State private var showPlayer: Bool = false
     @State private var showFullScreenPlayer: Bool = false
-    
+
     var body: some View {
         Button("Click me") {
             showPlayer = true

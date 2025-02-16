@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct PlayerView: View {
-    
     @State var viewModel: PlayerViewViewModel
-    
+
     var body: some View {
         contentView
     }
-    
+
     private var contentView: some View {
         ZStack {
             if viewModel.playerState == .expanded {
@@ -22,12 +21,12 @@ struct PlayerView: View {
             }
             ZStack {
                 switch viewModel.playerState {
-                case .expanded:
-                    expandedPlayerView
-                        .transition(.move(edge: .bottom))
-                case .collapsed:
-                    collapsedPlayerView
-                        .transition(.move(edge: .bottom))
+                    case .expanded:
+                        expandedPlayerView
+                            .transition(.move(edge: .bottom))
+                    case .collapsed:
+                        collapsedPlayerView
+                            .transition(.move(edge: .bottom))
                 }
             }
             .gesture(dragGesture)
@@ -36,28 +35,28 @@ struct PlayerView: View {
             .frame(maxHeight: .infinity, alignment: .bottom)
         }
     }
-    
+
     private var collapsedPlayerView: some View {
         CollapsedPlayerView(viewModel: $viewModel)
             .contentShape(Rectangle())
     }
-    
+
     private var expandedPlayerView: some View {
         ExpandedPlayerView(viewModel: $viewModel)
             .contentShape(Rectangle())
     }
-    
+
     private var dragGesture: some Gesture {
         DragGesture()
             .onChanged { value in
                 viewModel.updateDragOffset(value.translation.height)
             }
-            .onEnded { value in
+            .onEnded { _ in
                 viewModel.updatePlayerStateBasedOnDragOffset()
                 viewModel.dragOffset = 0
             }
     }
-    
+
     private var darkBackgroundOpacity: some View {
         Color
             .black

@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct OnFirstTaskViewModifier: ViewModifier {
-    
     @State private var didAppear: Bool = false
     let action: () async -> Void
-    
+
     func body(content: Content) -> some View {
         content
             .task {
@@ -23,7 +22,6 @@ struct OnFirstTaskViewModifier: ViewModifier {
 }
 
 extension View {
-    
     func onFirstTask(action: @escaping () async -> Void) -> some View {
         modifier(OnFirstTaskViewModifier(action: action))
     }

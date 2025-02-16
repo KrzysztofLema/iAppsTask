@@ -7,7 +7,7 @@
 
 struct FlickrMedia: Codable, Hashable {
     let url: String
-    
+
     enum CodingKeys: String, CodingKey {
         case url = "m"
     }

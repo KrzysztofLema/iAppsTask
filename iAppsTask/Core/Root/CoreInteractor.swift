@@ -7,13 +7,12 @@
 
 @MainActor
 struct CoreInteractor {
-    
     private let flickrManager: FlickrManager
-    
+
     init(container: DependencyContainer) {
-        flickrManager = container.resolve(FlickrManager.self)!
+        self.flickrManager = container.resolve(FlickrManager.self)!
     }
-    
+
     func fetchFeedFromFlickr(category: FeedCategoryType) async throws -> FlickrFeed {
         try await flickrManager.fetchFeedFromFlickr(category: category)
     }

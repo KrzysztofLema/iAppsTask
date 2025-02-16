@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  FlickrMainView.swift
 //  iAppsTask
 //
 //  Created by Krzysztof Lema on 12/02/2025.
@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct FlickrMainView: View {
-    
     @State var viewModel: FlickrMainViewModel
-    
+
     var body: some View {
         NavigationStack(path: $viewModel.path) {
             ScrollView {
-                VStack(alignment: .leading){
+                VStack(alignment: .leading) {
                     ForEach(viewModel.flickrFeed, id: \.id) { flickrFeed in
                         categorySection(feed: flickrFeed)
                     }
@@ -35,13 +34,13 @@ struct FlickrMainView: View {
             }
         }
     }
-    
+
     private func categorySection(feed: FlickrFeed) -> some View {
         VStack(alignment: .leading) {
             Text(feed.title)
                 .adaptiveFont(.title2)
                 .lineLimit(1)
-                
+
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(feed.items, id: \.id) { flickrItem in
@@ -67,7 +66,8 @@ struct FlickrMainView: View {
     FlickrMainView(
         viewModel: FlickrMainViewModel(
             interactor: CoreInteractor(
-                container: DevPreview.shared.container)
+                container: DevPreview.shared.container
+            )
         )
     )
     .previewEnvironment()

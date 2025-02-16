@@ -8,11 +8,10 @@
 import Foundation
 
 struct FlickrItem: Identifiable, Codable, Hashable {
-  
     var id: String {
         UUID().uuidString
     }
-    
+
     let title: String
     let link: String
     let media: FlickrMedia
@@ -22,7 +21,7 @@ struct FlickrItem: Identifiable, Codable, Hashable {
     let author: String
     let authorId: String
     let tags: String
-    
+
     enum CodingKeys: String, CodingKey {
         case title
         case link
@@ -34,8 +33,8 @@ struct FlickrItem: Identifiable, Codable, Hashable {
         case authorId = "author_id"
         case tags
     }
-    
-    internal init(
+
+    init(
         title: String,
         link: String,
         media: FlickrMedia,
@@ -56,24 +55,24 @@ struct FlickrItem: Identifiable, Codable, Hashable {
         self.authorId = authorId
         self.tags = tags
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        title = try container.decode(String.self, forKey: .title)
-        link = try container.decode(String.self, forKey: .link)
-        media = try container.decode(FlickrMedia.self, forKey: .media)
-        description = try container.decode(String.self, forKey: .description)
-        author = try container.decode(String.self, forKey: .author)
-        authorId = try container.decode(String.self, forKey: .authorId)
-        tags = try container.decode(String.self, forKey: .tags)
-        
+        self.title = try container.decode(String.self, forKey: .title)
+        self.link = try container.decode(String.self, forKey: .link)
+        self.media = try container.decode(FlickrMedia.self, forKey: .media)
+        self.description = try container.decode(String.self, forKey: .description)
+        self.author = try container.decode(String.self, forKey: .author)
+        self.authorId = try container.decode(String.self, forKey: .authorId)
+        self.tags = try container.decode(String.self, forKey: .tags)
+
         let dateTakenString = try container.decode(String.self, forKey: .dateTaken)
-        dateTaken = DateFormatter.iso8601Full.date(from: dateTakenString) ?? Date()
-        
+        self.dateTaken = DateFormatter.iso8601Full.date(from: dateTakenString) ?? Date()
+
         let publishedString = try container.decode(String.self, forKey: .published)
-        published = DateFormatter.iso8601Full.date(from: publishedString) ?? Date()
+        self.published = DateFormatter.iso8601Full.date(from: publishedString) ?? Date()
     }
-    
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(title, forKey: .title)
@@ -86,7 +85,7 @@ struct FlickrItem: Identifiable, Codable, Hashable {
         try container.encode(DateFormatter.iso8601Full.string(from: dateTaken), forKey: .dateTaken)
         try container.encode(DateFormatter.iso8601Full.string(from: published), forKey: .published)
     }
-    
+
     var eventParameters: [String: Any] {
         let dict: [String: Any?] = [
             "item_\(CodingKeys.title.rawValue)": title,
@@ -94,13 +93,13 @@ struct FlickrItem: Identifiable, Codable, Hashable {
             "item_\(CodingKeys.dateTaken.rawValue)": dateTaken,
             "item_\(CodingKeys.published.rawValue)": published
         ]
-        return dict.compactMapValues({ $0 })
+        return dict.compactMapValues { $0 }
     }
-    
+
     static var mock: Self {
         mocks[0]
     }
-    
+
     static var mocks: [Self] {
         let now = Date()
         return [

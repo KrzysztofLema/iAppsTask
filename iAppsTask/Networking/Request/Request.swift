@@ -8,6 +8,5 @@
 import Foundation
 
 public protocol Request {
-    
     func buildRequest() -> URLRequest?
 }

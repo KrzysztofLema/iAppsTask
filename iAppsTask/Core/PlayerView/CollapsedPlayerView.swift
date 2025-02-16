@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct CollapsedPlayerView: View {
-    
     @Binding var viewModel: PlayerViewViewModel
-    
+
     var body: some View {
-          contentView
+        contentView
     }
-    
+
     private var contentView: some View {
         VStack {
             playerButtons
@@ -23,24 +22,18 @@ struct CollapsedPlayerView: View {
         }
         .frame(height: 80 - viewModel.dragOffset / 10)
     }
-    
+
     private var playerButtons: some View {
         HStack {
             Image(systemName: "backward.circle")
                 .font(.title)
-                .anyButton {
-                    
-                }
+                .anyButton {}
             Image(systemName: "play.circle")
                 .font(.title)
-                .anyButton {
-                    
-                }
+                .anyButton {}
             Image(systemName: "forward.circle")
                 .font(.title)
-                .anyButton {
-                    
-                }
+                .anyButton {}
         }
         .frame(maxHeight: .infinity)
     }

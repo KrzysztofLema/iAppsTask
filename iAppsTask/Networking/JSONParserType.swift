@@ -12,15 +12,14 @@ public protocol JSONParserType {
 }
 
 public final class JSONParser: JSONParserType {
-    
     private let decoder = JSONDecoder()
-    
+
     public func decode<T: Decodable>(data: Data) throws -> T {
         do {
             return try decoder.decode(T.self, from: data)
-        } catch let error {
+        } catch {
             #if DEBUG
-            print("Decode error = \(error)")
+                print("Decode error = \(error)")
             #endif
             throw NetworkError.dataParsingFailed
         }

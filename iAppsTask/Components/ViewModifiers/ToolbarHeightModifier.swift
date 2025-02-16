@@ -4,7 +4,7 @@ import UIKit
 @Observable
 final class OrientationObserver {
     var orientation: UIDeviceOrientation = UIDevice.current.orientation
-    
+
     init() {
         NotificationCenter.default.addObserver(
             self,
@@ -13,11 +13,11 @@ final class OrientationObserver {
             object: nil
         )
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     @objc private func orientationChanged() {
         orientation = UIDevice.current.orientation
     }
@@ -26,11 +26,11 @@ final class OrientationObserver {
 struct ToolbarHeightModifier: ViewModifier {
     @Binding var height: CGFloat
     var orientationObserver = OrientationObserver()
-    
+
     func body(content: Content) -> some View {
         content
             .background(
-                GeometryReader { geometry in
+                GeometryReader { _ in
                     Color.clear.onAppear {
                         updateHeight()
                     }
@@ -40,16 +40,16 @@ struct ToolbarHeightModifier: ViewModifier {
                 }
             )
     }
-    
+
     private func updateHeight() {
         let window = UIApplication.shared.windows.first
         let safeAreaBottom = window?.safeAreaInsets.bottom ?? 0
         let isLandscape = UIDevice.current.orientation.isLandscape
-        
+
         let baseToolbarHeight: CGFloat = isLandscape ? 32 : 49
-        
+
         let adjustedSafeArea: CGFloat = isLandscape ? min(safeAreaBottom, 21) : safeAreaBottom
-        
+
         height = baseToolbarHeight + adjustedSafeArea
     }
 }

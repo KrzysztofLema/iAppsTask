@@ -6,8 +6,7 @@
 //
 
 struct MockFlickrService: FlickrServiceType {
-    
     func fetchFeedFromFlickr(category: FeedCategoryType) async throws -> FlickrFeed {
-        return .mock
+        .mock
     }
 }

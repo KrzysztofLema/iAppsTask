@@ -8,7 +8,6 @@
 import Foundation
 
 public enum NetworkError: Error {
-    
     case responseMissing
     case dataMissing
     case invalidURLRequest
