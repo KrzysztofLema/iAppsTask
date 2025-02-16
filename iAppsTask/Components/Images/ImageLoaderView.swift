@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ImageLoaderView: View {
+    
     var urlString: String = "https://picsum.photos/600/600"
     var resizingMode: ContentMode = .fill
     var opacity: Double = 1
+    var width: CGFloat = 100
+    var height: CGFloat = 100
     
     var body: some View {
         Rectangle()
@@ -20,20 +23,23 @@ struct ImageLoaderView: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: resizingMode)
+                        .frame(width: width, height: height)
                         .opacity(opacity)
                         .allowsHitTesting(false)
                 } placeholder: {
                     ProgressView()
+                        .frame(width: width, height: height)
                 }
                 .clipped()
             }
+            .frame(width: width, height: height)
     }
 }
 
 #Preview {
     ImageLoaderView()
         .frame(width: 100, height: 200)
-    //        .anyButton(.highlight) {
-    //
-    //        }
+        .anyButton {
+            
+        }
 }

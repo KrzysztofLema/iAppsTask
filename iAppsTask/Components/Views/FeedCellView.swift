@@ -9,21 +9,43 @@ import SwiftUI
 
 struct FeedCellView: View {
     
-    var title: String = "Living the life"
+    var title: String = "Living the lifeasdasdasd"
     var imageURL: String = Constants.randomImage
-    var font: Font = .title2
+    
+    private let cellSize: CGFloat = {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            return 200
+        case .phone:
+            return 140
+        default:
+            return 100
+        }
+    }()
+    
+    private let imageSize: CGFloat = {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            return 140
+        case .phone:
+            return 80
+        default:
+            return 100
+        }
+    }()
+
     
     var body: some View {
         ZStack {
-            VStack {
-                ImageLoaderView(urlString: imageURL)
+            VStack(spacing: 10) {
+                ImageLoaderView(urlString: imageURL, width: imageSize, height: imageSize)
                     .aspectRatio(1, contentMode: .fit)
                 Text(title)
-                    .font(font)
+                    .adaptiveFont(.headline)
                     .fontWeight(.semibold)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.3)
             }
+            .frame(width: cellSize, height: cellSize)
         }
     }
 }
