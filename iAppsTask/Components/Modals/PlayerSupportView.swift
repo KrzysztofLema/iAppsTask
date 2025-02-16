@@ -28,7 +28,7 @@ struct PlayerSupportView<Content: View>: View {
 
 extension View {
     func showPlayer(showPlayer: Binding<Bool>, @ViewBuilder content: () -> some View) -> some View {
-        self.overlay {
+        self.overlay(alignment: .bottom) {
             PlayerSupportView(showPlayer: showPlayer) {
                 content()
             }

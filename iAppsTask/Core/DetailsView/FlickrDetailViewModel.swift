@@ -14,6 +14,7 @@ final class FlickrDetailViewModel {
     var showPlayerView = false
     var scrollOffset: CGFloat = 0
     var imageHeight: CGFloat = 0
+    var toolbarHeight: CGFloat = 0
 
     init(flickrItem: FlickrItem) {
         self.flickrItem = flickrItem
