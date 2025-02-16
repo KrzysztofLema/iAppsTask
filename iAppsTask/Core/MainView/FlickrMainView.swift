@@ -14,7 +14,7 @@ struct FlickrMainView: View {
     var body: some View {
         NavigationStack(path: $viewModel.path) {
             ScrollView {
-                VStack(alignment: .leading, spacing: 40){
+                VStack(alignment: .leading){
                     ForEach(viewModel.flickrFeed, id: \.id) { flickrFeed in
                         categorySection(feed: flickrFeed)
                     }
@@ -39,32 +39,27 @@ struct FlickrMainView: View {
     private func categorySection(feed: FlickrFeed) -> some View {
         VStack(alignment: .leading) {
             Text(feed.title)
-                .font(.title2)
-                .fontWeight(.semibold)
+                .adaptiveFont(.title2)
                 .lineLimit(1)
-            ZStack {
-                ScrollView(.horizontal) {
-                    HStack(spacing: 12) {
-                        ForEach(feed.items, id: \.id) { flickrItem in
-                            FeedCellView(
-                                title: flickrItem.title,
-                                imageURL: flickrItem.media.url,
-                                font: .caption
-                            )
-                            .anyButton {
-                                viewModel.onFlickrItemPressed(flickrItem: flickrItem)
-                            }
+                
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(feed.items, id: \.id) { flickrItem in
+                        FeedCellView(
+                            title: flickrItem.title,
+                            imageURL: flickrItem.media.url
+                        )
+                        .anyButton {
+                            viewModel.onFlickrItemPressed(flickrItem: flickrItem)
                         }
                     }
                 }
-                .padding()
-                .withDividersAround()
-                .frame(height: 140)
-                .scrollIndicators(.hidden)
-                .scrollTargetLayout()
-                .scrollTargetBehavior(.viewAligned)
             }
+            .scrollIndicators(.hidden)
+            .scrollTargetLayout()
+            .scrollTargetBehavior(.viewAligned)
         }
+        .withDividersAround()
     }
 }
 

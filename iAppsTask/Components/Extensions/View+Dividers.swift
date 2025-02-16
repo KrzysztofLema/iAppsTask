@@ -15,17 +15,20 @@ public enum DividerSide {
 extension View {
   public func withDividersAround(
     sides: DividerSide = .all,
-    dividerColor: Color = .black
+    dividerColor: Color = .black,
+    padding: CGFloat = 5
   ) -> some View {
     VStack(spacing: .zero) {
       if sides == .top || sides == .all {
         Divider()
           .overlay(dividerColor)
+          .adaptivePadding(.vertical, padding)
       }
       self
       if sides == .bottom || sides == .all {
         Divider()
           .overlay(dividerColor)
+          .adaptivePadding(.vertical, padding)
       }
     }
   }
