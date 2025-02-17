@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		950592FE2D635C2D002F45FC /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 950592FD2D635C2D002F45FC /* SnapshotTesting */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		9532C7EA2D5D3C5400BF8BE3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		950592FF2D635E26002F45FC /* iAppsTask.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = iAppsTask.xctestplan; sourceTree = "<group>"; };
 		9532C7D92D5D3C5100BF8BE3 /* iAppsTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iAppsTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9532C7E92D5D3C5400BF8BE3 /* iAppsTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAppsTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9532C7F32D5D3C5400BF8BE3 /* iAppsTaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAppsTaskUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				950592FE2D635C2D002F45FC /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,13 +78,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		950592492D6358FE002F45FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9532C7D02D5D3C5100BF8BE3 = {
 			isa = PBXGroup;
 			children = (
+				950592FF2D635E26002F45FC /* iAppsTask.xctestplan */,
 				9532C7DB2D5D3C5100BF8BE3 /* iAppsTask */,
-				9532C7EC2D5D3C5400BF8BE3 /* iAppsTaskTests */,
 				9532C7F62D5D3C5400BF8BE3 /* iAppsTaskUITests */,
+				950592492D6358FE002F45FC /* Frameworks */,
 				9532C7DA2D5D3C5100BF8BE3 /* Products */,
+				9532C7EC2D5D3C5400BF8BE3 /* iAppsTaskTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -136,6 +151,7 @@
 			);
 			name = iAppsTaskTests;
 			packageProductDependencies = (
+				950592FD2D635C2D002F45FC /* SnapshotTesting */,
 			);
 			productName = iAppsTaskTests;
 			productReference = 9532C7E92D5D3C5400BF8BE3 /* iAppsTaskTests.xctest */;
@@ -196,6 +212,9 @@
 			);
 			mainGroup = 9532C7D02D5D3C5100BF8BE3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				950592352D63585D002F45FC /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9532C7DA2D5D3C5100BF8BE3 /* Products */;
 			projectDirPath = "";
@@ -579,6 +598,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		950592352D63585D002F45FC /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.18.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		950592FD2D635C2D002F45FC /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 950592352D63585D002F45FC /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9532C7D12D5D3C5100BF8BE3 /* Project object */;
 }
