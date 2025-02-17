@@ -14,10 +14,13 @@ struct iAppsTaskApp: App {
 
     var body: some Scene {
         WindowGroup {
-            FlickrMainView(viewModel: FlickrMainViewModel(interactor: CoreInteractor(
-                container: delegate.dependencies
-                    .container
-            )))
+            FlickrMainView(
+                viewModel: FlickrMainViewModel(
+                    interactor: CoreInteractor(
+                        container: delegate.dependencies.container
+                    )
+                )
+            )
         }
     }
 }

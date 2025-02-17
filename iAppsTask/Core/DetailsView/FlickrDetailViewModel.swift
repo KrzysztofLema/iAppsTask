@@ -10,6 +10,7 @@ import SwiftUI
 @Observable
 final class FlickrDetailViewModel {
     let flickrItem: FlickrItem
+
     var showPlayerView = false
     var scrollOffset: CGFloat = 0
     var imageHeight: CGFloat = 0
@@ -33,5 +34,29 @@ final class FlickrDetailViewModel {
 
     func onClosePlayerButtonPressed() {
         showPlayerView = false
+    }
+
+    enum Event: LogEventType {
+        case myEvent
+
+        var parameters: [String: Any]? {
+            switch self {
+                default:
+                    nil
+            }
+        }
+
+        var type: LogType {
+            switch self {
+                default:
+                    .analytic
+            }
+        }
+
+        var eventName: String {
+            switch self {
+                case .myEvent: "ScreenView_Start"
+            }
+        }
     }
 }

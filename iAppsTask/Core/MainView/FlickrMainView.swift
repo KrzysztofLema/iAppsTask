@@ -32,6 +32,12 @@ struct FlickrMainView: View {
             .onFirstTask {
                 await viewModel.loadBoatsFeed()
             }
+            .onAppear {
+                viewModel.viewDidLoad()
+            }
+            .onDisappear {
+                viewModel.viewDidDisappear()
+            }
         }
     }
 
