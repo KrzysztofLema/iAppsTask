@@ -41,4 +41,4 @@ This project was built as part of a coding challenge to demonstrate clean archit
 
 Clone the repository.
 Open the project in Xcode 16.0 or later.
-Run the app on an iOS Simulator or device.
+Run the app on an iOS Simulator or device (there is mock and dev schema).
