@@ -8,5 +8,5 @@
 import Foundation
 
 enum MainViewState {
-    case loaded, loading, error
+    case loaded, loading
 }

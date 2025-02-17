@@ -14,21 +14,19 @@ struct FlickrMainView: View {
         NavigationStack(path: $viewModel.path) {
             Group {
                 switch viewModel.mainViewState {
-                case .loaded:
-                    ScrollView {
-                        VStack(alignment: .leading) {
-                            ForEach(viewModel.flickrFeed, id: \.id) { flickrFeed in
-                                categorySection(feed: flickrFeed)
+                    case .loaded:
+                        ScrollView {
+                            VStack(alignment: .leading) {
+                                ForEach(viewModel.flickrFeed, id: \.id) { flickrFeed in
+                                    categorySection(feed: flickrFeed)
+                                }
                             }
                         }
-                    }
-                case .loading:
-                    ProgressView()
-                case .error:
-                    Text("Error")
+                    case .loading:
+                        ProgressView()
                 }
-                
             }
+            .showCustomAlert(alert: $viewModel.showAlert)
             .navigationDestinationForCoreModule(path: $viewModel.path)
             .onFirstTask {
                 await viewModel.loadCatFeed()
