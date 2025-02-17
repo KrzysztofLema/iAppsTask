@@ -9,7 +9,10 @@ struct FlickrService: FlickrServiceType {
     private let networkManager: NetworkManagerType
     private let serviceRequest: ServiceRequest
 
-    init(networkManager: NetworkManager = NetworkManager(), serviceRequest: ServiceRequest) {
+    init(
+        networkManager: NetworkManager = NetworkManager(),
+        serviceRequest: ServiceRequest
+    ) {
         self.networkManager = networkManager
         self.serviceRequest = serviceRequest
     }

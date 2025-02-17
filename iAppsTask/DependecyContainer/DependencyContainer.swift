@@ -20,6 +20,51 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 
+@MainActor
+struct Dependencies {
+    let container: DependencyContainer
+    let logManager: LogManager
+
+    init() {
+        let flickrManager: FlickrManager
+        let container = DependencyContainer()
+
+        self.logManager = LogManager(services: [ConsoleService(printParameters: true)])
+        flickrManager = FlickrManager(service: FlickrService(serviceRequest: FlickrServiceRequest()))
+
+        container.register(FlickrManager.self, service: flickrManager)
+        container.register(LogManager.self, service: logManager)
+        self.container = container
+    }
+}
+
+extension View {
+    func previewEnvironment() -> some View {
+        environment(DevPreview.shared.container)
+    }
+}
+
+@MainActor
+class DevPreview {
+    static let shared = DevPreview()
+
+    var container: DependencyContainer {
+        let container = DependencyContainer()
+        container.register(LogManager.self, service: logManager)
+        container.register(FlickrManager.self, service: flickrManager)
+
+        return container
+    }
+
+    let flickrManager: FlickrManager
+    let logManager: LogManager
+
+    init() {
+        self.flickrManager = FlickrManager(service: MockFlickrService())
+        self.logManager = LogManager(services: [])
+    }
+}
+
 @Observable
 @MainActor
 class DependencyContainer {
@@ -38,46 +83,5 @@ class DependencyContainer {
     func resolve<T>(_ type: T.Type) -> T? {
         let key = "\(type)"
         return services[key] as? T
-    }
-}
-
-@MainActor
-struct Dependencies {
-    let container: DependencyContainer
-    let flickrManager: FlickrManager
-
-    init() {
-        let container = DependencyContainer()
-
-        self.flickrManager = FlickrManager(service: FlickrService(serviceRequest: FlickrServiceRequest()))
-
-        container.register(FlickrManager.self, service: flickrManager)
-        self.container = container
-    }
-}
-
-extension View {
-    func previewEnvironment() -> some View {
-        environment(DevPreview.shared.container)
-    }
-}
-
-@MainActor
-class DevPreview {
-    static let shared = DevPreview()
-
-    var container: DependencyContainer {
-        let container = DependencyContainer()
-        container.register(NetworkManagerType.self, service: networManager)
-        container.register(FlickrManager.self, service: flickrManager)
-        return container
-    }
-
-    let networManager: NetworkManagerType
-    let flickrManager: FlickrManager
-
-    init() {
-        self.networManager = MockNetworkManager(mockData: .some(Data()))
-        self.flickrManager = FlickrManager(service: MockFlickrService())
     }
 }
