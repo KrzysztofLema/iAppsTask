@@ -23,6 +23,8 @@ final class FlickrMainViewModel {
     private(set) var flickrFeed: [FlickrFeed] = []
     private(set) var mainViewState: MainViewState = .loading
 
+    var showAlert: AnyAppAlert?
+
     var path: [NavigationPathOption] = []
 
     init(interactor: FlickrMainViewInteractor) {
@@ -44,7 +46,7 @@ final class FlickrMainViewModel {
             mainViewState = .loaded
         } catch {
             interactor.trackEvent(event: Event.loadCatFeedFailed)
-            mainViewState = .error
+            showAlert = AnyAppAlert(error: error)
         }
     }
 
@@ -57,7 +59,7 @@ final class FlickrMainViewModel {
             mainViewState = .loaded
         } catch {
             interactor.trackEvent(event: Event.loadDogFeedFailed)
-            mainViewState = .error
+            showAlert = AnyAppAlert(error: error)
         }
     }
 
@@ -70,7 +72,7 @@ final class FlickrMainViewModel {
             mainViewState = .loaded
         } catch {
             interactor.trackEvent(event: Event.loadMoutainsFailed)
-            mainViewState = .error
+            showAlert = AnyAppAlert(error: error)
         }
     }
 
@@ -83,7 +85,7 @@ final class FlickrMainViewModel {
             mainViewState = .loaded
         } catch {
             interactor.trackEvent(event: Event.loadBoatsFailed)
-            mainViewState = .error
+            showAlert = AnyAppAlert(error: error)
         }
     }
 
