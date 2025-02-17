@@ -21,6 +21,7 @@ final class FlickrMainViewModel {
     private let interactor: FlickrMainViewInteractor
 
     private(set) var flickrFeed: [FlickrFeed] = []
+    private(set) var mainViewState: MainViewState = .loading
 
     var path: [NavigationPathOption] = []
 
@@ -40,8 +41,10 @@ final class FlickrMainViewModel {
             let catFlickrFeed = try await interactor.fetchFeedFromFlickr(category: .cat)
             interactor.trackEvent(event: Event.loadCatFeedSuccess(count: catFlickrFeed.items.count))
             flickrFeed.append(catFlickrFeed)
+            mainViewState = .loaded
         } catch {
             interactor.trackEvent(event: Event.loadCatFeedFailed)
+            mainViewState = .error
         }
     }
 
@@ -51,8 +54,10 @@ final class FlickrMainViewModel {
             let dogFlickrFeed = try await interactor.fetchFeedFromFlickr(category: .dog)
             interactor.trackEvent(event: Event.loadDogFeedSuccess(count: dogFlickrFeed.items.count))
             flickrFeed.append(dogFlickrFeed)
+            mainViewState = .loaded
         } catch {
             interactor.trackEvent(event: Event.loadDogFeedFailed)
+            mainViewState = .error
         }
     }
 
@@ -62,8 +67,10 @@ final class FlickrMainViewModel {
             let mountainsFlickrFeed = try await interactor.fetchFeedFromFlickr(category: .moutains)
             interactor.trackEvent(event: Event.loadMoutainsSuccess(count: mountainsFlickrFeed.items.count))
             flickrFeed.append(mountainsFlickrFeed)
+            mainViewState = .loaded
         } catch {
             interactor.trackEvent(event: Event.loadMoutainsFailed)
+            mainViewState = .error
         }
     }
 
@@ -73,8 +80,10 @@ final class FlickrMainViewModel {
             let boatFlickrFeed = try await interactor.fetchFeedFromFlickr(category: .boats)
             interactor.trackEvent(event: Event.loadBoatsSuccess(count: boatFlickrFeed.items.count))
             flickrFeed.append(boatFlickrFeed)
+            mainViewState = .loaded
         } catch {
             interactor.trackEvent(event: Event.loadBoatsFailed)
+            mainViewState = .error
         }
     }
 
