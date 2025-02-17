@@ -46,8 +46,8 @@ class PlayerManager {
     }
 
     deinit {
-        Task { [self] in
-            await removeTimeObserver()
+        Task { [weak self] in
+            await self?.removeTimeObserver()
         }
     }
 
@@ -88,7 +88,7 @@ class PlayerManager {
     private func setupTimeObserver() {
         let interval = TimeInterval(0.5)
 
-        Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
+        timeObserverToken = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
             guard let self else { return }
             Task {
                 await self.delegate?.playerManager(self, currentTime: self.currentTime, duration: self.duration)
@@ -96,5 +96,10 @@ class PlayerManager {
         }
     }
 
-    private func removeTimeObserver() async {}
+    private func removeTimeObserver() async {
+        if let timer = timeObserverToken as? Timer {
+            timer.invalidate()
+        }
+        timeObserverToken = nil
+    }
 }
