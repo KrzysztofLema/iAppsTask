@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
-
 struct SliderView: View {
     @State private var isDragging: Bool = false
-    @Binding var progress: Float
+
+    var currentTime: TimeInterval = 0
+    var duration: TimeInterval = 0
+    var onSeek: (TimeInterval) -> Void = { _ in }
+
     var progressBarMinHeight: CGFloat = 8
     var progressBarMaxHeight: CGFloat = 16
+
+    private var progress: Double {
+        guard duration > 0 else { return 0 }
+        return (currentTime / duration) * 100
+    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -47,14 +55,12 @@ struct SliderView: View {
         DragGesture(minimumDistance: 0)
             .onChanged { value in
                 isDragging = true
-                progress = min(max(0, Float(value.location.x / proxy.size.width * 100)), 100)
+                let percentage = min(max(0, Float(value.location.x / proxy.size.width * 100)), 100)
+                let seekTime = TimeInterval(Double(percentage) / 100.0 * duration)
+                onSeek(seekTime)
             }
             .onEnded { _ in
                 isDragging = false
             }
     }
-}
-
-#Preview {
-    SliderView(progress: .constant(50))
 }

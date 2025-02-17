@@ -21,6 +21,7 @@ struct iAppsTaskApp: App {
                     )
                 )
             )
+            .environment(delegate.dependencies.container)
         }
     }
 }
