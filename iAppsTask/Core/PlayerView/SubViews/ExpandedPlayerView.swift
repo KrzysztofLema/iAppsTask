@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ExpandedPlayerView: View {
-    @Binding var viewModel: PlayerViewViewModel
+    var viewModel: PlayerViewViewModel
 
     var body: some View {
         contentView
@@ -19,8 +19,16 @@ struct ExpandedPlayerView: View {
             headerView
             descriptionView
             playerButtons
+                .frame(maxWidth: .infinity)
             Spacer()
-            SliderView(progress: $viewModel.value)
+            SliderView(
+                currentTime: viewModel.currentTime,
+                duration: viewModel.duration,
+                onSeek: { newTime in
+                    viewModel.seek(to: newTime) { _ in
+                    }
+                }
+            )
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .frame(height: 400 - viewModel.dragOffset / 10)
@@ -39,10 +47,12 @@ struct ExpandedPlayerView: View {
 
     private var descriptionView: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("An Audio Title")
-                .font(.title)
-                .fontWeight(.bold)
-                .lineLimit(1)
+            if let playerItem = viewModel.playerItem {
+                Text("\(playerItem.artist): \(playerItem.title)")
+                    .adaptiveFont(.title)
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+            }
 
             Text(
                 String.loremIpsum(paragraphs: 2)
@@ -56,18 +66,7 @@ struct ExpandedPlayerView: View {
     }
 
     private var playerButtons: some View {
-        HStack {
-            Image(systemName: "backward.circle")
-                .font(.title)
-                .anyButton {}
-            Image(systemName: "play.circle")
-                .font(.title)
-                .anyButton {}
-            Image(systemName: "forward.circle")
-                .font(.title)
-                .anyButton {}
-        }
-        .frame(maxWidth: .infinity)
+        PlayerButtons(viewModel: viewModel)
     }
 
     private var dragIndication: some View {
@@ -84,4 +83,14 @@ struct ExpandedPlayerView: View {
                 viewModel.onCloseButtonPressed()
             }
     }
+}
+
+#Preview {
+    ExpandedPlayerView(
+        viewModel: PlayerViewViewModel(
+            interactor: CoreInteractor(
+                container: DevPreview.shared.container
+            )
+        )
+    ).previewEnvironment()
 }

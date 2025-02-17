@@ -37,12 +37,12 @@ struct PlayerView: View {
     }
 
     private var collapsedPlayerView: some View {
-        CollapsedPlayerView(viewModel: $viewModel)
+        CollapsedPlayerView(viewModel: viewModel)
             .contentShape(Rectangle())
     }
 
     private var expandedPlayerView: some View {
-        ExpandedPlayerView(viewModel: $viewModel)
+        ExpandedPlayerView(viewModel: viewModel)
             .contentShape(Rectangle())
     }
 
@@ -66,11 +66,28 @@ struct PlayerView: View {
     }
 }
 
-#Preview {
-    PlayerView(viewModel: PlayerViewViewModel())
+#Preview("Collapsed") {
+    PlayerView(
+        viewModel: PlayerViewViewModel(
+            interactor: CoreInteractor(
+                container: DevPreview.shared.container
+            ),
+            playerState: .collapsed,
+            dragOffset: 0
+        )
+    )
+    .previewEnvironment()
 }
 
-enum PlayerState {
-    case expanded
-    case collapsed
+#Preview("Expanded") {
+    PlayerView(
+        viewModel: PlayerViewViewModel(
+            interactor: CoreInteractor(
+                container: DevPreview.shared.container
+            ),
+            playerState: .expanded,
+            dragOffset: 0
+        )
+    )
+    .previewEnvironment()
 }

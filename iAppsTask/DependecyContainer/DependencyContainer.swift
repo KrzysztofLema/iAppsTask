@@ -27,13 +27,16 @@ struct Dependencies {
 
     init() {
         let flickrManager: FlickrManager
+        let playerManager: PlayerManager
         let container = DependencyContainer()
 
         self.logManager = LogManager(services: [ConsoleService(printParameters: true)])
         flickrManager = FlickrManager(service: FlickrService(serviceRequest: FlickrServiceRequest()))
+        playerManager = PlayerManager(service: MockPlayerService(playerItem: .mock))
 
         container.register(FlickrManager.self, service: flickrManager)
         container.register(LogManager.self, service: logManager)
+        container.register(PlayerManager.self, service: playerManager)
         self.container = container
     }
 }
@@ -52,16 +55,19 @@ class DevPreview {
         let container = DependencyContainer()
         container.register(LogManager.self, service: logManager)
         container.register(FlickrManager.self, service: flickrManager)
+        container.register(PlayerManager.self, service: playerManager)
 
         return container
     }
 
     let flickrManager: FlickrManager
     let logManager: LogManager
+    let playerManager: PlayerManager
 
     init() {
         self.flickrManager = FlickrManager(service: MockFlickrService())
         self.logManager = LogManager(services: [])
+        self.playerManager = PlayerManager(service: MockPlayerService(playerItem: .mock))
     }
 }
 

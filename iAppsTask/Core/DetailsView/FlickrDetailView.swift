@@ -11,6 +11,7 @@ struct FlickrDetailView: View {
     @State var viewModel: FlickrDetailViewModel
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(DependencyContainer.self) private var container
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -104,7 +105,7 @@ struct FlickrDetailView: View {
             content: {
                 PlayerView(
                     viewModel: PlayerViewViewModel(
-                        onClosePressed: {
+                        interactor: CoreInteractor(container: container), onClosePressed: {
                             viewModel.onClosePlayerButtonPressed()
                         }
                     )
@@ -143,5 +144,8 @@ struct FlickrDetailView: View {
 }
 
 #Preview {
-    FlickrDetailView(viewModel: FlickrDetailViewModel(flickrItem: .mock))
+    FlickrDetailView(
+        viewModel: FlickrDetailViewModel(flickrItem: .mock)
+    )
+    .previewEnvironment()
 }
