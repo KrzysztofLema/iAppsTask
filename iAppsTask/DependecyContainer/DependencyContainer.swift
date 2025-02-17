@@ -14,10 +14,20 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        dependencies = Dependencies()
+        #if MOCK
+            dependencies = Dependencies(config: .mock)
+        #elseif DEV
+            dependencies = Dependencies(config: .dev)
+        #else
+            dependencies = Dependencies(config: .prod)
+        #endif
 
         return true
     }
+}
+
+enum BuildConfiguration {
+    case mock, dev, prod
 }
 
 @MainActor
@@ -25,15 +35,26 @@ struct Dependencies {
     let container: DependencyContainer
     let logManager: LogManager
 
-    init() {
+    init(config: BuildConfiguration) {
         let flickrManager: FlickrManager
         let playerManager: PlayerManager
+
+        switch config {
+            case .mock:
+                self.logManager = LogManager(services: [])
+                flickrManager = FlickrManager(service: MockFlickrService())
+                playerManager = PlayerManager(service: MockPlayerService(playerItem: .mock))
+            case .dev:
+                self.logManager = LogManager(
+                    services: [ConsoleService(printParameters: true)]
+                )
+                flickrManager = FlickrManager(service: FlickrService(serviceRequest: FlickrServiceRequest()))
+                playerManager = PlayerManager(service: MockPlayerService(playerItem: .mock))
+            case .prod:
+                #warning("Production configuration not yet implemented")
+                fatalError()
+        }
         let container = DependencyContainer()
-
-        self.logManager = LogManager(services: [ConsoleService(printParameters: true)])
-        flickrManager = FlickrManager(service: FlickrService(serviceRequest: FlickrServiceRequest()))
-        playerManager = PlayerManager(service: MockPlayerService(playerItem: .mock))
-
         container.register(FlickrManager.self, service: flickrManager)
         container.register(LogManager.self, service: logManager)
         container.register(PlayerManager.self, service: playerManager)
