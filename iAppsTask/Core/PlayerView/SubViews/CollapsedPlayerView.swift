@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct CollapsedPlayerView: View {
+    
     var viewModel: PlayerViewViewModel
+    var namespace: Namespace.ID
 
     var body: some View {
         contentView
@@ -17,7 +19,7 @@ struct CollapsedPlayerView: View {
     private var contentView: some View {
         VStack {
             playerButtons
-            Spacer()
+                .matchedGeometryEffect(id: "playerButtons", in: namespace)
             SliderView(
                 currentTime: viewModel.currentTime,
                 duration: viewModel.duration,
@@ -27,11 +29,22 @@ struct CollapsedPlayerView: View {
                     })
                 }
             )
+            .matchedGeometryEffect(id: "slider", in: namespace)
         }
+        .background(Color(uiColor: UIColor.secondarySystemBackground))
         .frame(height: 80 - viewModel.dragOffset / 10)
     }
 
     private var playerButtons: some View {
         PlayerButtons(viewModel: viewModel)
     }
+}
+
+#Preview {
+    CollapsedPlayerView(
+        viewModel: PlayerViewViewModel(
+            interactor: CoreInteractor(
+                container: DevPreview.shared.container)),
+        namespace: Namespace().wrappedValue
+    )
 }

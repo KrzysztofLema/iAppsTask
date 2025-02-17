@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExpandedPlayerView: View {
     var viewModel: PlayerViewViewModel
+    var namespace: Namespace.ID
 
     var body: some View {
         contentView
@@ -18,7 +19,9 @@ struct ExpandedPlayerView: View {
         VStack(alignment: .leading) {
             headerView
             descriptionView
+                .matchedGeometryEffect(id: "description", in: namespace)
             playerButtons
+                .matchedGeometryEffect(id: "playerButtons", in: namespace)
                 .frame(maxWidth: .infinity)
             Spacer()
             SliderView(
@@ -29,7 +32,9 @@ struct ExpandedPlayerView: View {
                     }
                 }
             )
+            .matchedGeometryEffect(id: "slider", in: namespace)
         }
+        .background(Color(uiColor: UIColor.secondarySystemBackground))
         .frame(maxHeight: .infinity, alignment: .top)
         .frame(height: 400 - viewModel.dragOffset / 10)
     }
@@ -91,6 +96,6 @@ struct ExpandedPlayerView: View {
             interactor: CoreInteractor(
                 container: DevPreview.shared.container
             )
-        )
+        ), namespace: Namespace().wrappedValue
     ).previewEnvironment()
 }

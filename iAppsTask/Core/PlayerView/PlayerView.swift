@@ -9,7 +9,8 @@ import SwiftUI
 
 struct PlayerView: View {
     @State var viewModel: PlayerViewViewModel
-
+    @Namespace var namespace
+    
     var body: some View {
         contentView
     }
@@ -23,26 +24,24 @@ struct PlayerView: View {
                 switch viewModel.playerState {
                     case .expanded:
                         expandedPlayerView
-                            .transition(.move(edge: .bottom))
                     case .collapsed:
                         collapsedPlayerView
-                            .transition(.move(edge: .bottom))
                 }
             }
+            .animation(.spring(), value: viewModel.playerState)
             .gesture(dragGesture)
-            .background(.white)
             .zIndex(1)
             .frame(maxHeight: .infinity, alignment: .bottom)
         }
     }
 
     private var collapsedPlayerView: some View {
-        CollapsedPlayerView(viewModel: viewModel)
+        CollapsedPlayerView(viewModel: viewModel, namespace: namespace)
             .contentShape(Rectangle())
     }
 
     private var expandedPlayerView: some View {
-        ExpandedPlayerView(viewModel: viewModel)
+        ExpandedPlayerView(viewModel: viewModel, namespace: namespace)
             .contentShape(Rectangle())
     }
 
