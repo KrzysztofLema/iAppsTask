@@ -94,3 +94,14 @@ struct FlickrFeed: Identifiable, Codable, Hashable {
         ]
     }
 }
+
+extension FlickrFeed: Equatable {
+    public static func == (lhs: FlickrFeed, rhs: FlickrFeed) -> Bool {
+        lhs.title == rhs.title &&
+            lhs.link == rhs.link &&
+            lhs.description == rhs.description &&
+            lhs.modified == rhs.modified &&
+            lhs.generator == rhs.generator &&
+            lhs.items == rhs.items
+    }
+}
