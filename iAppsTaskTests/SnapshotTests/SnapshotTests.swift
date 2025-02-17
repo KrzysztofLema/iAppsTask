@@ -15,7 +15,7 @@ final class SnapShotTests: XCTestCase {
         let viewModel = FlickrMainViewModel(interactor: CoreInteractor(container: DevPreview.shared.container))
         let view = FlickrMainView(viewModel: viewModel)
 
-        assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Pro)))
+        assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Pro)), record: false)
     }
 
     func test_mainView_shows_loaded_feed_after_loading() {
@@ -35,6 +35,6 @@ final class SnapShotTests: XCTestCase {
 
         waitForExpectations(timeout: 5)
 
-        assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Pro)))
+        assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Pro)), record: false)
     }
 }
